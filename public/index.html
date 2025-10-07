@@ -23,6 +23,7 @@
         
         .logo-section {
             margin-bottom: 30px;
+            margin-top: 40px; /* Account for fixed navigation bar */
         }
         
         .logo-container {
@@ -181,11 +182,259 @@
             text-align: center;
         }
         
+        /* Modern Browser Navigation Bar Styles */
+        .browser-navbar {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            background: #2d2d2d;
+            border-bottom: 1px solid #3c3c3c;
+            padding: 0 4px;
+            gap: 8px;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+        
+        .nav-controls {
+            display: flex;
+            gap: 4px;
+            padding-left: 0;
+            margin-right: auto;
+        }
+        
+        .nav-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background: #3c3c3c;
+        }
+        
+        .nav-btn:disabled {
+            color: #666;
+            cursor: not-allowed;
+        }
+        
+        .address-bar-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 8px;
+        }
+        
+        .address-bar {
+            display: flex;
+            align-items: center;
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 20px;
+            height: 32px;
+            overflow: hidden;
+        }
+        
+        .address-bar-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            padding: 0 12px;
+        }
+        
+        .security-indicator {
+            margin-right: 8px;
+            color: #4caf50;
+        }
+        
+        .address-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .address-input::placeholder {
+            color: #888;
+        }
+        
+        .address-bar-right {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+        }
+        
+        .address-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .address-btn:hover {
+            background: #3c3c3c;
+        }
+        
+        .address-separator {
+            width: 1px;
+            height: 16px;
+            background: #3c3c3c;
+            margin: 0 4px;
+        }
+        
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding-right: 0;
+            margin-left: auto;
+        }
+        
+        .toolbar-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .toolbar-btn:hover {
+            background: #3c3c3c;
+        }
+        
+        .toolbar-separator {
+            width: 1px;
+            height: 20px;
+            background: #3c3c3c;
+            margin: 0 4px;
+        }
+        
     </style>
 </head>
 <body>
+    <!-- Global Navigation Bar (Always Visible) -->
+    <div class="browser-navbar" id="globalNavbar">
+        <!-- Left Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="backBtn" onclick="goBack()" title="Back" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+            </button>
+            <button class="nav-btn" id="forwardBtn" onclick="goForward()" title="Forward" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+            </button>
+            <button class="nav-btn" id="refreshBtn" onclick="refresh()" title="Refresh" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23,4 23,10 17,10"></polyline>
+                    <polyline points="1,20 1,14 7,14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                </svg>
+            </button>
+            <button class="nav-btn" id="homeBtn" onclick="goHome()" title="Home">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Address Bar (Omnibox) -->
+        <div class="address-bar-container">
+            <div class="address-bar">
+                <div class="address-bar-left">
+                    <div class="security-indicator" id="securityIndicator">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <circle cx="12" cy="16" r="1"></circle>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="addressBar" 
+                        placeholder="Search Google or type a URL"
+                        class="address-input"
+                    />
+                </div>
+                <div class="address-bar-right">
+                    <button class="address-btn" onclick="toggleBookmark()" title="Bookmark this page">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                    <div class="address-separator"></div>
+                    <button class="address-btn" onclick="toggleExtensions()" title="Extensions">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Toolbar -->
+        <div class="toolbar">
+            <button class="toolbar-btn" onclick="toggleDownloads()" title="Downloads">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7,10 12,15 17,10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            </button>
+            <button class="toolbar-btn" onclick="toggleWallet()" title="Wallet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+            </button>
+            <button class="toolbar-btn" onclick="toggleShield()" title="Security & Privacy">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </button>
+            <div class="toolbar-separator"></div>
+            <button class="toolbar-btn" onclick="toggleMenu()" title="Menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <!-- Welcome Screen -->
     <div id="welcomeScreen">
+
         <!-- Logo Section -->
         <div class="logo-section">
         <div class="logo-container">
@@ -269,54 +518,12 @@
     </div>
 
     <!-- Browser View (hidden by default) -->
-    <div id="browserView" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: calc(100vh - 30px); z-index: 1000; background: white; flex-direction: column;">
-        <!-- Navigation Bar -->
-        <div style="display: flex; align-items: center; padding: 8px; background-color: #f8f9fa; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;">
-            <!-- Navigation Buttons -->
-            <div style="display: flex; gap: 8px; margin-right: 12px;">
-                <button onclick="goBack()" style="padding: 6px 12px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15,18 9,12 15,6"></polyline>
-                    </svg>
-                </button>
-                <button onclick="goForward()" style="padding: 6px 12px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9,18 15,12 9,6"></polyline>
-                    </svg>
-                </button>
-                <button onclick="refresh()" style="padding: 6px 12px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="23,4 23,10 17,10"></polyline>
-                        <polyline points="1,20 1,14 7,14"></polyline>
-                        <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
-                    </svg>
-                </button>
-                <button onclick="goHome()" style="padding: 6px 12px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                    </svg>
-                </button>
-                <button onclick="toggleFullscreen()" style="padding: 6px 12px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- Address Bar -->
-            <input 
-                type="text" 
-                id="addressBar" 
-                placeholder="Enter URL or search query"
-                style="flex: 1; padding: 8px 12px; border: 1px solid #ccc; border-radius: 20px; outline: none; font-size: 14px;"
-            />
-        </div>
+    <div id="browserView" style="display: none; position: fixed; top: 40px; left: 0; width: 100vw; height: calc(100vh - 40px); z-index: 1000; background: white; flex-direction: column;">
         
         <!-- WebView -->
         <webview 
             id="webview" 
-            style="flex: 1; width: 100%; height: calc(100vh - 90px);"
+            style="flex: 1; width: 100%; height: calc(100vh - 40px);"
             nodeintegration="false"
             websecurity="true"
         ></webview>
@@ -388,6 +595,9 @@
                 } else {
                     console.error('Webview element not found');
                 }
+                
+                // Update button states for browser view
+                updateButtonStates('browser');
             } catch (error) {
                 console.error('Error in loadInWebView:', error);
             }
@@ -405,6 +615,7 @@
                 if (previousEntry.url === 'home') {
                     // Go back to home screen
                     goHome();
+                    return; // goHome() will handle button states
                 } else {
                     // Load the previous URL
                     const webview = document.getElementById('webview');
@@ -417,6 +628,14 @@
                         if (addressBar) {
                             addressBar.value = previousEntry.url;
                         }
+                        
+                        // Show browser view and hide home screen
+                        document.getElementById('welcomeScreen').style.display = 'none';
+                        document.getElementById('browserView').style.display = 'block';
+                        isSearchMode = true;
+                        
+                        // Update button states for browser view
+                        updateButtonStates('browser');
                     }
                 }
             } else if (currentHistoryIndex === 0) {
@@ -440,6 +659,7 @@
                 if (nextEntry.url === 'home') {
                     // Go to home screen
                     goHome();
+                    return; // goHome() will handle button states
                 } else {
                     // Load the next URL
                     const webview = document.getElementById('webview');
@@ -452,6 +672,14 @@
                         if (addressBar) {
                             addressBar.value = nextEntry.url;
                         }
+                        
+                        // Show browser view and hide home screen
+                        document.getElementById('welcomeScreen').style.display = 'none';
+                        document.getElementById('browserView').style.display = 'block';
+                        isSearchMode = true;
+                        
+                        // Update button states for browser view
+                        updateButtonStates('browser');
                     }
                 }
             }
@@ -465,8 +693,10 @@
         }
 
         function goHome() {
-            // Add home to history if not already there
-            if (sessionHistory.length === 0 || sessionHistory[sessionHistory.length - 1].url !== 'home') {
+            // Only add home to history if we're not already at home
+            if (sessionHistory.length === 0) {
+                addToHistory('home', 'BlueChip AI Browser Home');
+            } else if (currentHistoryIndex < 0 || sessionHistory[currentHistoryIndex].url !== 'home') {
                 addToHistory('home', 'BlueChip AI Browser Home');
             }
             
@@ -480,6 +710,9 @@
             if (addressBar) {
                 addressBar.value = '';
             }
+            
+            // Update button states for home view
+            updateButtonStates('home');
         }
 
         function toggleFullscreen() {
@@ -500,6 +733,65 @@
                     document.exitFullscreen();
                 }
             }
+        }
+
+        // Button State Management
+        function updateButtonStates(view) {
+            const backBtn = document.getElementById('backBtn');
+            const forwardBtn = document.getElementById('forwardBtn');
+            const refreshBtn = document.getElementById('refreshBtn');
+            const homeBtn = document.getElementById('homeBtn');
+            
+            if (view === 'home') {
+                // On home page - check if there's future history
+                if (backBtn) backBtn.disabled = currentHistoryIndex <= 0;
+                if (forwardBtn) forwardBtn.disabled = currentHistoryIndex >= sessionHistory.length - 1;
+                if (refreshBtn) refreshBtn.disabled = true;
+                if (homeBtn) homeBtn.disabled = false;
+            } else if (view === 'browser') {
+                // In browser view - enable based on history
+                if (backBtn) backBtn.disabled = currentHistoryIndex <= 0;
+                if (forwardBtn) forwardBtn.disabled = currentHistoryIndex >= sessionHistory.length - 1;
+                if (refreshBtn) refreshBtn.disabled = false;
+                if (homeBtn) homeBtn.disabled = false;
+            }
+        }
+
+        // Modern Browser Toolbar Functions
+        function toggleBookmark() {
+            console.log('Bookmark clicked');
+            // TODO: Implement bookmark functionality
+            alert('Bookmark feature coming soon!');
+        }
+
+        function toggleExtensions() {
+            console.log('Extensions clicked');
+            // TODO: Implement extensions panel
+            alert('Extensions panel coming soon!');
+        }
+
+        function toggleDownloads() {
+            console.log('Downloads clicked');
+            // TODO: Implement downloads panel
+            alert('Downloads panel coming soon!');
+        }
+
+        function toggleWallet() {
+            console.log('Wallet clicked');
+            // TODO: Implement wallet functionality
+            alert('Wallet feature coming soon!');
+        }
+
+        function toggleShield() {
+            console.log('Security & Privacy clicked');
+            // TODO: Implement security panel
+            alert('Security & Privacy panel coming soon!');
+        }
+
+        function toggleMenu() {
+            console.log('Menu clicked');
+            // TODO: Implement hamburger menu
+            alert('Menu panel coming soon!');
         }
 
         function navigateToUrl() {
@@ -571,6 +863,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize session history with home screen
             addToHistory('home', 'BlueChip AI Browser Home');
+            
+            // Initialize button states for home view
+            updateButtonStates('home');
             
             const webview = document.getElementById('webview');
             if (webview) {
