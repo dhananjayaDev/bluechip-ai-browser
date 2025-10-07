@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix for development mode hiding body - More aggressive override */
+* {
+  display: block !important;
+}
+
+body {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#__next {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Reset for specific elements that should be inline */
+span, input, button, img, svg {
+  display: inline-block !important;
+}
+
+div {
+  display: block !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-slide-out {
+  animation: slideOut 0.3s ease-out;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+}
+
+/* Custom input styles */
+.input-field {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors;
+}
+
+/* Custom card styles */
+.card {
+  @apply bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow;
+}
+
+/* Custom sidebar styles */
+.sidebar {
+  @apply bg-white border border-gray-200 shadow-lg;
+}
+
+/* Custom tab styles */
+.tab-active {
+  @apply bg-blue-50 border-b-2 border-blue-500 text-blue-700;
+}
+
+.tab-inactive {
+  @apply bg-gray-50 hover:bg-gray-100 text-gray-600;
+}
+
+/* Custom loading spinner */
+.spinner {
+  @apply w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin;
+}
+
+/* Custom selection styles */
+::selection {
+  @apply bg-blue-200 text-blue-900;
+}
+
+::-moz-selection {
+  @apply bg-blue-200 text-blue-900;
+}
+
+/* Custom placeholder styles */
+::placeholder {
+  @apply text-gray-400;
+}
+
+::-webkit-input-placeholder {
+  @apply text-gray-400;
+}
+
+::-moz-placeholder {
+  @apply text-gray-400;
+}
