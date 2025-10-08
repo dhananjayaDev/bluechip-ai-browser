@@ -500,24 +500,24 @@
     <div class="browser-navbar" id="globalNavbar">
         <!-- Left Navigation Controls -->
         <div class="nav-controls">
-            <button class="nav-btn" id="backBtn" onclick="goBack()" title="Back" disabled>
+            <button class="nav-btn" id="backBtn" onclick="window.goBack().catch(console.error)" title="Back" disabled>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="15,18 9,12 15,6"></polyline>
                 </svg>
             </button>
-            <button class="nav-btn" id="forwardBtn" onclick="goForward()" title="Forward" disabled>
+            <button class="nav-btn" id="forwardBtn" onclick="window.goForward().catch(console.error)" title="Forward" disabled>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9,18 15,12 9,6"></polyline>
                 </svg>
             </button>
-            <button class="nav-btn" id="refreshBtn" onclick="refresh()" title="Refresh" disabled>
+            <button class="nav-btn" id="refreshBtn" onclick="window.refresh().catch(console.error)" title="Refresh" disabled>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="23,4 23,10 17,10"></polyline>
                     <polyline points="1,20 1,14 7,14"></polyline>
                     <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
                 </svg>
             </button>
-            <button class="nav-btn" id="homeBtn" onclick="goHome()" title="Home">
+            <button class="nav-btn" id="homeBtn" onclick="window.goHome().catch(console.error)" title="Home">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -895,7 +895,7 @@
     </div>
 
     <!-- Welcome Screen -->
-    <div id="welcomeScreen">
+    <div id="welcomeScreen" style="display: block;">
 
         <!-- Logo Section -->
         <div class="logo-section">
@@ -929,7 +929,7 @@
         <!-- Popular Sites Section -->
         <div class="sites-section">
             <div class="sites-grid">
-                <div class="site-item" onclick="openSite('https://www.google.com')">
+                <div class="site-item" onclick="console.log('=== GOOGLE CLICKED ==='); console.log('window.openSite type:', typeof window.openSite); if (typeof window.openSite === 'function') { window.openSite('https://www.google.com'); } else { console.error('window.openSite is not a function!'); }" style="cursor: pointer;">
                     <div class="site-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -938,7 +938,7 @@
                     </div>
                     <span class="site-name">Google</span>
                 </div>
-                <div class="site-item" onclick="openSite('https://www.youtube.com')">
+                <div class="site-item" onclick="window.openSite('https://www.youtube.com')" style="cursor: pointer;">
                     <div class="site-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="23 7 16 12 23 17 23 7"></polygon>
@@ -947,7 +947,7 @@
                     </div>
                     <span class="site-name">YouTube</span>
                 </div>
-                <div class="site-item" onclick="openSite('https://github.com')">
+                <div class="site-item" onclick="window.openSite('https://github.com')" style="cursor: pointer;">
                     <div class="site-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -955,7 +955,7 @@
                     </div>
                     <span class="site-name">GitHub</span>
                 </div>
-                <div class="site-item" onclick="openSite('https://en.wikipedia.org')">
+                <div class="site-item" onclick="window.openSite('https://en.wikipedia.org')" style="cursor: pointer;">
                     <div class="site-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
@@ -964,7 +964,7 @@
                     </div>
                     <span class="site-name">Wikipedia</span>
                 </div>
-                <div class="site-item" onclick="openSite('https://linkedin.com')">
+                <div class="site-item" onclick="window.openSite('https://linkedin.com')" style="cursor: pointer;">
                     <div class="site-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -979,16 +979,32 @@
 
     </div>
 
-    <!-- Browser View (hidden by default) -->
-    <div id="browserView" style="display: none; position: fixed; top: 40px; left: 0; width: 100vw; height: calc(100vh - 40px); z-index: 1000; background: white; flex-direction: column;">
-        
-        <!-- WebView -->
+    <!-- WebView Container -->
+    <div id="webviewContainer" style="display: none; position: fixed; top: 40px; left: 0; width: 100vw; height: calc(100vh - 40px); z-index: 1000; background: white;">
         <webview 
-            id="webview" 
-            style="flex: 1; width: 100%; height: calc(100vh - 40px);"
-            nodeintegration="false"
-            websecurity="true"
-        ></webview>
+            id="webContent" 
+            src=""
+            style="display: flex; width: 100%; height: 100%; border: none;"
+            webpreferences="nodeIntegration=false, contextIsolation=true">
+        </webview>
+    </div>
+
+    <!-- DevTools Message (shown when DevTools is open) -->
+    <div id="devtoolsMessage" style="display: none; position: fixed; top: 40px; left: 0; width: 100vw; height: calc(100vh - 40px); z-index: 1001; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <div style="max-width: 600px; padding: 40px;">
+            <h2 style="font-size: 2.5em; margin-bottom: 20px; font-weight: 300;">🔧 Developer Tools Active</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px; opacity: 0.9;">
+                The web content is temporarily hidden while Developer Tools are open to prevent visual overlap.
+            </p>
+            <p style="font-size: 1em; opacity: 0.8;">
+                Close the Developer Tools to continue browsing.
+            </p>
+            <div style="margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                <p style="font-size: 0.9em; opacity: 0.7;">
+                    💡 <strong>Tip:</strong> This is how professional Electron browsers handle DevTools to ensure clean debugging experience.
+                </p>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -996,6 +1012,32 @@
         if (typeof global === 'undefined') {
             window.global = window;
         }
+
+        // Ensure we're in Electron environment
+        console.log('Environment check:');
+        console.log('- window.electronAPI:', !!window.electronAPI);
+        console.log('- require available:', typeof require !== 'undefined');
+        console.log('- process available:', typeof process !== 'undefined');
+
+        // Test function for debugging
+        function testWebview() {
+            console.log('=== TESTING WEBVIEW ===');
+            const webview = document.getElementById('webview');
+            console.log('Webview element:', webview);
+            console.log('Webview src:', webview ? webview.src : 'N/A');
+            console.log('Webview readyState:', webview ? webview.readyState : 'N/A');
+            
+            // Test loading a simple page
+            if (webview) {
+                console.log('Testing webview with Google...');
+                loadInWebView('https://www.google.com');
+            } else {
+                console.error('Webview not found!');
+            }
+        }
+
+        // Make testWebview available globally
+        window.testWebview = testWebview;
 
         let currentUrl = '';
         let isSearchMode = false;
@@ -1017,55 +1059,80 @@
         }
 
         function openSite(url) {
-            if (typeof require !== 'undefined') {
-                // Electron environment - load in webview
-                loadInWebView(url);
-            } else {
-                // Browser environment
+            console.log('=== openSite called with URL:', url, '===');
+            console.log('window.electronAPI exists:', !!window.electronAPI);
+            console.log('require exists:', typeof require !== 'undefined');
+            console.log('process exists:', typeof process !== 'undefined');
+            
+            // Test if we can access the elements
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const browserView = document.getElementById('browserView');
+            console.log('welcomeScreen found:', !!welcomeScreen);
+            console.log('browserView found:', !!browserView);
+            
+            // Since we're running in Electron, always try to load in webview first
+            // Only fallback to window.open if webview fails
+            console.log('Attempting to load in webview...');
+            loadInWebView(url).catch(error => {
+                console.error('Error in openSite:', error);
                 window.open(url, '_blank');
-            }
+            });
         }
 
-        function loadInWebView(url) {
+        async function loadInWebView(url) {
+            console.log('loadInWebView called with URL:', url);
             try {
                 // Add to session history
                 addToHistory(url, 'Search Result');
                 
-                // Hide the welcome screen and show the webview
-                const welcomeScreen = document.getElementById('welcomeScreen');
-                const browserView = document.getElementById('browserView');
+                // Get webview element
+                const webview = document.getElementById('webContent');
+                if (!webview) {
+                    console.error('Webview not found!');
+                    window.open(url, '_blank');
+                    return;
+                }
                 
+                // Hide ALL home screen content
+                const welcomeScreen = document.getElementById('welcomeScreen');
                 if (welcomeScreen) {
                     welcomeScreen.style.display = 'none';
-                }
-                if (browserView) {
-                    browserView.style.display = 'block';
+                    console.log('Welcome screen hidden');
                 }
                 
-                // Load the URL in the webview
-                const webview = document.getElementById('webview');
-                if (webview) {
-                    webview.src = url;
-                    currentUrl = url;
-                    isSearchMode = true;
-                    
-                    // Update the address bar
-                    const addressBar = document.getElementById('addressBar');
-                    if (addressBar) {
-                        addressBar.value = url;
-                    }
-                } else {
-                    console.error('Webview element not found');
+                // Show webview container
+                const webviewContainer = document.getElementById('webviewContainer');
+                if (webviewContainer) {
+                    webviewContainer.style.display = 'block';
+                    console.log('Webview container shown');
+                }
+                
+                // Load URL in webview
+                console.log('Loading URL in webview:', url);
+                webview.src = url;
+                
+                console.log('Navigation successful');
+                currentUrl = url;
+                isSearchMode = true;
+                
+                // Update the address bar
+                const addressBar = document.getElementById('addressBar');
+                if (addressBar) {
+                    addressBar.value = url;
+                    console.log('Address bar updated');
                 }
                 
                 // Update button states for browser view
                 updateButtonStates('browser');
+                console.log('loadInWebView completed successfully');
             } catch (error) {
                 console.error('Error in loadInWebView:', error);
+                console.log('Falling back to window.open due to error...');
+                window.open(url, '_blank');
             }
         }
 
-        function goBack() {
+        async function goBack() {
             console.log('Go back clicked. Current index:', currentHistoryIndex);
             console.log('Session history:', sessionHistory);
             
@@ -1079,8 +1146,8 @@
                     goHome();
                     return; // goHome() will handle button states
                 } else {
-                    // Load the previous URL
-                    const webview = document.getElementById('webview');
+                    // Load the previous URL in webview
+                    const webview = document.getElementById('webContent');
                     if (webview) {
                         webview.src = previousEntry.url;
                         currentUrl = previousEntry.url;
@@ -1091,9 +1158,9 @@
                             addressBar.value = previousEntry.url;
                         }
                         
-                        // Show browser view and hide home screen
+                        // Show webview container and hide home screen
                         document.getElementById('welcomeScreen').style.display = 'none';
-                        document.getElementById('browserView').style.display = 'block';
+                        document.getElementById('webviewContainer').style.display = 'block';
                         isSearchMode = true;
                         
                         // Update button states for browser view
@@ -1109,7 +1176,7 @@
             }
         }
 
-        function goForward() {
+        async function goForward() {
             console.log('Go forward clicked. Current index:', currentHistoryIndex);
             console.log('Session history:', sessionHistory);
             
@@ -1123,8 +1190,8 @@
                     goHome();
                     return; // goHome() will handle button states
                 } else {
-                    // Load the next URL
-                    const webview = document.getElementById('webview');
+                    // Load the next URL in webview
+                    const webview = document.getElementById('webContent');
                     if (webview) {
                         webview.src = nextEntry.url;
                         currentUrl = nextEntry.url;
@@ -1135,9 +1202,9 @@
                             addressBar.value = nextEntry.url;
                         }
                         
-                        // Show browser view and hide home screen
+                        // Show webview container and hide home screen
                         document.getElementById('welcomeScreen').style.display = 'none';
-                        document.getElementById('browserView').style.display = 'block';
+                        document.getElementById('webviewContainer').style.display = 'block';
                         isSearchMode = true;
                         
                         // Update button states for browser view
@@ -1147,14 +1214,16 @@
             }
         }
 
-        function refresh() {
-            const webview = document.getElementById('webview');
-            if (webview && webview.reload) {
+        async function refresh() {
+            const webview = document.getElementById('webContent');
+            if (webview) {
                 webview.reload();
             }
         }
 
-        function goHome() {
+        async function goHome() {
+            console.log('=== GO HOME CALLED ===');
+            
             // Only add home to history if we're not already at home
             if (sessionHistory.length === 0) {
                 addToHistory('home', 'BlueChip AI Browser Home');
@@ -1162,19 +1231,39 @@
                 addToHistory('home', 'BlueChip AI Browser Home');
             }
             
-            // Show welcome screen
-            document.getElementById('welcomeScreen').style.display = 'block';
-            document.getElementById('browserView').style.display = 'none';
+            // Hide webview container completely
+            const webviewContainer = document.getElementById('webviewContainer');
+            if (webviewContainer) {
+                webviewContainer.style.display = 'none';
+                console.log('Webview container hidden');
+            }
+            
+            const webview = document.getElementById('webContent');
+            if (webview) {
+                webview.src = ''; // Clear the URL
+                console.log('Webview cleared');
+            }
+            
+            // Show ALL home screen content
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            if (welcomeScreen) {
+                welcomeScreen.style.display = 'block';
+                console.log('Welcome screen shown');
+            }
+            
             isSearchMode = false;
+            currentUrl = '';
             
             // Clear address bar
             const addressBar = document.getElementById('addressBar');
             if (addressBar) {
                 addressBar.value = '';
+                addressBar.placeholder = 'Search Google or type a URL';
             }
             
             // Update button states for home view
             updateButtonStates('home');
+            console.log('Go home completed successfully');
         }
 
         function toggleFullscreen() {
@@ -1495,8 +1584,9 @@
             document.removeEventListener('click', handleClickOutside);
         }
 
-        function navigateToUrl() {
+        async function navigateToUrl() {
             const url = document.getElementById('addressBar').value.trim();
+            console.log('navigateToUrl called with:', url);
             if (url) {
                 let fullUrl = url;
                 if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -1508,19 +1598,31 @@
                         fullUrl = 'https://www.google.com/search?q=' + encodeURIComponent(url);
                     }
                 }
-                loadInWebView(fullUrl);
+                console.log('Final URL:', fullUrl);
+                await window.loadInWebView(fullUrl);
             }
         }
 
         // Handle search input
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            console.log('Search input keypress event:', e.key);
             if (e.key === 'Enter') {
                 const query = this.value.trim();
+                console.log('Search query:', query);
                 if (query) {
                     if (query.startsWith('http://') || query.startsWith('https://')) {
-                        loadInWebView(query);
+                        console.log('Loading URL directly:', query);
+                        window.loadInWebView(query).catch(error => {
+                            console.error('Error loading URL:', error);
+                            window.open(query, '_blank');
+                        });
                     } else {
-                        loadInWebView('https://www.google.com/search?q=' + encodeURIComponent(query));
+                        const searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+                        console.log('Searching on Google:', searchUrl);
+                        window.loadInWebView(searchUrl).catch(error => {
+                            console.error('Error searching:', error);
+                            window.open(searchUrl, '_blank');
+                        });
                     }
                 }
             }
@@ -1528,8 +1630,12 @@
 
         // Handle address bar
         document.getElementById('addressBar').addEventListener('keypress', function(e) {
+            console.log('Address bar keypress event:', e.key);
             if (e.key === 'Enter') {
-                navigateToUrl();
+                console.log('Address bar enter pressed');
+                window.navigateToUrl().catch(error => {
+                    console.error('Error navigating from address bar:', error);
+                });
             }
         });
 
@@ -1560,38 +1666,59 @@
             }
         });
 
+        // Make functions globally accessible
+        window.openSite = openSite;
+        window.loadInWebView = loadInWebView;
+        window.goBack = goBack;
+        window.goForward = goForward;
+        window.refresh = refresh;
+        window.goHome = goHome;
+        window.navigateToUrl = navigateToUrl;
+        
+        // Debug function availability
+        console.log('=== FUNCTION AVAILABILITY CHECK ===');
+        console.log('window.openSite:', typeof window.openSite);
+        console.log('window.loadInWebView:', typeof window.loadInWebView);
+        console.log('window.goBack:', typeof window.goBack);
+        console.log('window.goHome:', typeof window.goHome);
+        console.log('window.electronAPI:', typeof window.electronAPI);
+        console.log('===================================');
+        
+        // Test function for debugging
+
         // Webview event listeners
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded - Initializing browser');
+            
             // Initialize session history with home screen
             addToHistory('home', 'BlueChip AI Browser Home');
             
             // Initialize button states for home view
             updateButtonStates('home');
             
-            const webview = document.getElementById('webview');
+            // Test if functions are available
+            console.log('openSite function available:', typeof window.openSite);
+            console.log('loadInWebView function available:', typeof window.loadInWebView);
+            console.log('goBack function available:', typeof window.goBack);
+            console.log('goHome function available:', typeof window.goHome);
+            console.log('window.electronAPI available:', !!window.electronAPI);
+            
+            // WebView is now handled directly in JavaScript, no need for IPC listeners
+            console.log('WebView implementation ready');
+            
+            // Set up WebView event listeners for better viewport handling
+            const webview = document.getElementById('webContent');
             if (webview) {
-                // Wait for webview to be ready
-                webview.addEventListener('dom-ready', function() {
-                    console.log('Webview is ready');
+                webview.addEventListener('dom-ready', () => {
+                    console.log('WebView DOM ready - ensuring proper viewport');
+                    // Force webview to take full space
+                    webview.style.width = '100vw';
+                    webview.style.height = 'calc(100vh - 40px)';
                 });
-
-                webview.addEventListener('did-navigate', function(e) {
-                    currentUrl = e.url;
-                    const addressBar = document.getElementById('addressBar');
-                    if (addressBar) {
-                        addressBar.value = e.url;
-                    }
+                
+                webview.addEventListener('did-finish-load', () => {
+                    console.log('WebView finished loading - viewport should be correct');
                 });
-
-                webview.addEventListener('did-fail-load', function(e) {
-                    console.error('Failed to load:', e.errorDescription);
-                });
-
-                webview.addEventListener('did-finish-load', function() {
-                    console.log('Webview finished loading');
-                });
-            } else {
-                console.error('Webview element not found during initialization');
             }
         });
     </script>

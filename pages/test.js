@@ -1,42 +1,36 @@
-export default function TestPage() {
+import Head from 'next/head';
+
+export default function Test() {
   return (
-    <div style={{ padding: '20px', backgroundColor: 'white', minHeight: '100vh' }}>
-      <h1 style={{ color: 'blue', fontSize: '32px' }}>BlueChip AI Browser</h1>
-      <p style={{ color: 'gray', fontSize: '18px' }}>This is a test page to verify the app is working.</p>
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <Head>
+        <title>Test Page - BlueChip AI Browser</title>
+      </Head>
+      
+      <h1>BlueChip AI Browser - Test Page</h1>
+      <p>If you can see this, the Next.js + Electron integration is working!</p>
+      
       <div style={{ marginTop: '20px' }}>
-        <input 
-          type="text" 
-          placeholder="Search the web or enter a URL"
+        <h2>Test Navigation</h2>
+        <button 
+          onClick={() => window.open('https://www.google.com', '_blank')}
           style={{ 
-            width: '500px', 
-            padding: '10px', 
-            fontSize: '16px',
-            border: '1px solid #ccc',
-            borderRadius: '25px',
-            outline: 'none'
+            padding: '10px 20px', 
+            backgroundColor: '#4285f4', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: '5px',
+            cursor: 'pointer'
           }}
-        />
+        >
+          Open Google
+        </button>
       </div>
+      
       <div style={{ marginTop: '20px' }}>
-        <button style={{ 
-          padding: '10px 20px', 
-          backgroundColor: '#4285f4', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '5px',
-          marginRight: '10px'
-        }}>
-          Google Search
-        </button>
-        <button style={{ 
-          padding: '10px 20px', 
-          backgroundColor: '#34a853', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '5px'
-        }}>
-          Bluechip Tech
-        </button>
+        <h2>Environment Test</h2>
+        <p>API Key configured: {process.env.GEMINI_API_KEY ? 'Yes' : 'No'}</p>
+        <p>Current time: {new Date().toLocaleString()}</p>
       </div>
     </div>
   );

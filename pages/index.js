@@ -7,7 +7,6 @@ import AISidebar from '../components/AISidebar';
 import WebView from '../components/WebView';
 import PopularSites from '../components/PopularSites';
 import { useBrowserStore } from '../lib/store';
-import '../styles/burger-menu.css';
 
 export default function Home() {
   const {

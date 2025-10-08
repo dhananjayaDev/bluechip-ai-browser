@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueChip AI Browser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Navigation Bar */
+        .nav-bar {
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+            position: relative;
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            min-width: 32px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .address-bar {
+            flex: 1;
+            margin: 0 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.9);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .address-bar:focus {
+            background: white;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+            min-width: 32px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+        }
+        
+        .logo-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4285f4, #9c27b0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+        }
+        
+        .logo-text {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 18px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .search-box:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .popular-sites {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .popular-sites h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+        }
+        
+        .site-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .site-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .site-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .site-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        /* Loading States */
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4285f4;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Error States */
+        .error-message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sites-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 15px;
+            }
+            
+            .site-card {
+                padding: 20px 15px;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+            
+            .search-box {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <div class="nav-controls">
+            <button class="nav-btn" id="backBtn" disabled title="Go Back">←</button>
+            <button class="nav-btn" id="forwardBtn" disabled title="Go Forward">→</button>
+            <button class="nav-btn" id="refreshBtn" title="Refresh">↻</button>
+            <button class="nav-btn" id="homeBtn" title="Home">🏠</button>
+        </div>
+        
+        <input type="text" class="address-bar" id="addressBar" placeholder="Search or enter URL...">
+        
+        <div class="nav-actions">
+            <button class="action-btn" id="bookmarkBtn" title="Bookmark">⭐</button>
+            <button class="action-btn" id="menuBtn" title="Menu">☰</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <div class="logo">BC</div>
+                    <div class="logo-text">BlueChip AI Browser</div>
+                </div>
+                <div class="tagline">Your intelligent browsing companion</div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchInput" placeholder="Search the web or enter a URL...">
+            </div>
+            
+            <div class="popular-sites">
+                <h3>Popular Sites</h3>
+                <div class="sites-grid">
+                    <div class="site-card" data-url="https://www.google.com">
+                        <div class="site-icon" style="background: #4285f4;">G</div>
+                        <div class="site-name">Google</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.youtube.com">
+                        <div class="site-icon" style="background: #ff0000;">Y</div>
+                        <div class="site-name">YouTube</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.github.com">
+                        <div class="site-icon" style="background: #333;">G</div>
+                        <div class="site-name">GitHub</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.stackoverflow.com">
+                        <div class="site-icon" style="background: #f48024;">S</div>
+                        <div class="site-name">Stack Overflow</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.reddit.com">
+                        <div class="site-icon" style="background: #ff4500;">R</div>
+                        <div class="site-name">Reddit</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.twitter.com">
+                        <div class="site-icon" style="background: #1da1f2;">T</div>
+                        <div class="site-name">Twitter</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.linkedin.com">
+                        <div class="site-icon" style="background: #0077b5;">L</div>
+                        <div class="site-name">LinkedIn</div>
+                    </div>
+                    <div class="site-card" data-url="https://www.amazon.com">
+                        <div class="site-icon" style="background: #ff9900;">A</div>
+                        <div class="site-name">Amazon</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading" id="loadingState">
+            <div class="spinner"></div>
+            <div>Loading...</div>
+        </div>
+
+        <!-- Error State -->
+        <div class="error-message" id="errorState">
+            <div>Failed to load content</div>
+            <button onclick="goHome()" style="margin-top: 10px; padding: 8px 16px; background: white; color: #ff6b6b; border: none; border-radius: 5px; cursor: pointer;">Go Home</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUrl = '';
+        let isSearchMode = false;
+        let history = [];
+        let historyIndex = -1;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('BlueChip AI Browser initialized');
+            setupEventListeners();
+            updateNavigationButtons();
+        });
+
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        if (query.startsWith('http://') || query.startsWith('https://')) {
+                            navigateToUrl(query);
+                        } else {
+                            navigateToUrl('https://www.google.com/search?q=' + encodeURIComponent(query));
+                        }
+                    }
+                }
+            });
+
+            // Address bar functionality
+            document.getElementById('addressBar').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const url = this.value.trim();
+                    if (url) {
+                        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                            navigateToUrl('https://' + url);
+                        } else {
+                            navigateToUrl(url);
+                        }
+                    }
+                }
+            });
+
+            // Navigation buttons
+            document.getElementById('backBtn').addEventListener('click', goBack);
+            document.getElementById('forwardBtn').addEventListener('click', goForward);
+            document.getElementById('refreshBtn').addEventListener('click', refresh);
+            document.getElementById('homeBtn').addEventListener('click', goHome);
+
+            // Popular sites
+            document.querySelectorAll('.site-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    navigateToUrl(url);
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'l') {
+                    e.preventDefault();
+                    document.getElementById('addressBar').focus();
+                    document.getElementById('addressBar').select();
+                }
+                if (e.key === 'F11') {
+                    e.preventDefault();
+                    toggleFullscreen();
+                }
+            });
+        }
+
+        async function navigateToUrl(url) {
+            console.log('Navigating to:', url);
+            
+            try {
+                showLoading();
+                
+                // Add to history
+                addToHistory(url);
+                
+                // Hide welcome screen
+                document.getElementById('welcomeScreen').style.display = 'none';
+                document.getElementById('errorState').style.display = 'none';
+                
+                // Update address bar
+                document.getElementById('addressBar').value = url;
+                currentUrl = url;
+                isSearchMode = true;
+                
+                // Navigate using Electron API
+                const result = await window.electronAPI.navigateToUrl(url);
+                
+                if (result.success) {
+                    console.log('Navigation successful');
+                    hideLoading();
+                } else {
+                    console.error('Navigation failed:', result.error);
+                    showError('Failed to load: ' + result.error);
+                }
+                
+                updateNavigationButtons();
+                
+            } catch (error) {
+                console.error('Navigation error:', error);
+                showError('Navigation failed: ' + error.message);
+            }
+        }
+
+        async function goBack() {
+            try {
+                const result = await window.electronAPI.goBack();
+                if (result.success) {
+                    updateCurrentUrl();
+                }
+                updateNavigationButtons();
+            } catch (error) {
+                console.error('Go back error:', error);
+            }
+        }
+
+        async function goForward() {
+            try {
+                const result = await window.electronAPI.goForward();
+                if (result.success) {
+                    updateCurrentUrl();
+                }
+                updateNavigationButtons();
+            } catch (error) {
+                console.error('Go forward error:', error);
+            }
+        }
+
+        async function refresh() {
+            try {
+                const result = await window.electronAPI.refresh();
+                if (!result.success) {
+                    console.error('Refresh failed:', result.error);
+                }
+            } catch (error) {
+                console.error('Refresh error:', error);
+            }
+        }
+
+        function goHome() {
+            document.getElementById('welcomeScreen').style.display = 'flex';
+            document.getElementById('errorState').style.display = 'none';
+            document.getElementById('addressBar').value = '';
+            currentUrl = '';
+            isSearchMode = false;
+            updateNavigationButtons();
+        }
+
+        async function updateCurrentUrl() {
+            try {
+                const result = await window.electronAPI.getCurrentUrl();
+                if (result.success) {
+                    document.getElementById('addressBar').value = result.url;
+                    currentUrl = result.url;
+                }
+            } catch (error) {
+                console.error('Update URL error:', error);
+            }
+        }
+
+        async function updateNavigationButtons() {
+            try {
+                const result = await window.electronAPI.getCurrentUrl();
+                if (result.success) {
+                    // Enable/disable back and forward buttons based on history
+                    document.getElementById('backBtn').disabled = historyIndex <= 0;
+                    document.getElementById('forwardBtn').disabled = historyIndex >= history.length - 1;
+                }
+            } catch (error) {
+                console.error('Update buttons error:', error);
+            }
+        }
+
+        function addToHistory(url) {
+            if (historyIndex < history.length - 1) {
+                history = history.slice(0, historyIndex + 1);
+            }
+            history.push(url);
+            historyIndex = history.length - 1;
+        }
+
+        function showLoading() {
+            document.getElementById('loadingState').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingState').style.display = 'none';
+        }
+
+        function showError(message) {
+            document.getElementById('errorState').style.display = 'block';
+            document.getElementById('errorState').querySelector('div').textContent = message;
+            hideLoading();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>

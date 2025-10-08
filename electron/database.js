@@ -86,7 +86,7 @@ class Database {
   async insertDefaultSettings() {
     const defaultSettings = [
       { key: 'homepage', value: 'https://www.google.com' },
-      { key: 'gemini_api_key', value: 'AIzaSyCNLAkh8xk2TcX63IQQRNXdZ0hGqAUFmnA' },
+      { key: 'gemini_api_key', value: '' },
       { key: 'theme', value: 'light' },
       { key: 'search_engine', value: 'https://www.google.com/search?q=' }
     ];

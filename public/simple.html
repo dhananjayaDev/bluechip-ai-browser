@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueChip AI Browser - Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            color: #ffd700;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        .test-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 BlueChip AI Browser</h1>
+            <p>Simple Working Version</p>
+            <p>No Next.js complexity - Pure HTML + Electron</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>✅ Working Electron App</h3>
+                <p>This is a simple HTML page loaded directly in Electron without Next.js complications.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔧 No Global Errors</h3>
+                <p>No react-refresh, webpack, or global polyfill issues. Clean and simple.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Fast Loading</h3>
+                <p>Direct HTML loading means instant startup and no compilation delays.</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Functionality</h2>
+            <button class="test-button" onclick="testAlert()">Test Alert</button>
+            <button class="test-button" onclick="testTime()">Show Current Time</button>
+            <button class="test-button" onclick="testExternal()">Open Google</button>
+            <button class="test-button" onclick="testElectron()">Test Electron API</button>
+            
+            <div class="status" id="status">
+                Status: Ready to test
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testAlert() {
+            alert('Alert works! Electron is functioning properly.');
+            updateStatus('Alert test completed');
+        }
+
+        function testTime() {
+            const now = new Date().toLocaleString();
+            updateStatus(`Current time: ${now}`);
+        }
+
+        function testExternal() {
+            if (typeof require !== 'undefined') {
+                const { shell } = require('electron');
+                shell.openExternal('https://www.google.com');
+                updateStatus('Opened Google in default browser');
+            } else {
+                window.open('https://www.google.com', '_blank');
+                updateStatus('Opened Google in new window');
+            }
+        }
+
+        function testElectron() {
+            if (typeof require !== 'undefined') {
+                const { ipcRenderer } = require('electron');
+                updateStatus('Electron APIs available: ' + Object.keys(require('electron')));
+            } else {
+                updateStatus('Electron APIs not available (running in browser)');
+            }
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status').textContent = `Status: ${message}`;
+        }
+
+        // Initialize
+        updateStatus('Page loaded successfully - All systems working!');
+        console.log('Simple HTML page loaded in Electron');
+    </script>
+</body>
+</html>

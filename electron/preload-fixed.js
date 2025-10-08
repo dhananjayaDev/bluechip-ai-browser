@@ -1,61 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-console.log('Preload script is running!');
-
-// CRITICAL: Define Node.js globals BEFORE any other code
+// Fix global is not defined error
 if (typeof global === 'undefined') {
-  console.log('Defining global polyfill');
   window.global = window;
-  global = window;
-}
-
-// Also define on the global object itself
-if (typeof globalThis !== 'undefined') {
-  globalThis.global = globalThis;
-}
-
-// Inject polyfills into the web content context
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('DOMContentLoaded - injecting polyfills');
-  
-  // Create a script element to inject polyfills
-  const script = document.createElement('script');
-  script.textContent = `
-    console.log('Injecting global polyfills via script');
-    if (typeof global === 'undefined') {
-      window.global = window;
-      global = window;
-    }
-    if (typeof __dirname === 'undefined') {
-      window.__dirname = '';
-      __dirname = '';
-    }
-    if (typeof __filename === 'undefined') {
-      window.__filename = '';
-      __filename = '';
-    }
-    if (typeof process === 'undefined') {
-      window.process = { env: {} };
-      process = { env: {} };
-    }
-    console.log('Global polyfills injected successfully');
-  `;
-  document.head.appendChild(script);
-});
-
-if (typeof __dirname === 'undefined') {
-  window.__dirname = '';
-  __dirname = '';
-}
-
-if (typeof __filename === 'undefined') {
-  window.__filename = '';
-  __filename = '';
-}
-
-if (typeof process === 'undefined') {
-  window.process = { env: {} };
-  process = { env: {} };
 }
 
 // Expose protected methods that allow the renderer process to use
@@ -100,12 +47,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onTabCreated: (callback) => ipcRenderer.on('tab-created', callback),
   onTabClosed: (callback) => ipcRenderer.on('tab-closed', callback),
   onNavigationChanged: (callback) => ipcRenderer.on('navigation-changed', callback),
-  
-      // WebView listeners (simplified)
-      onUpdateUrl: (callback) => ipcRenderer.on('update-url', (event, url) => callback(url)),
-      onUpdateCanGoBack: (callback) => ipcRenderer.on('update-can-go-back', (event, canGoBack) => callback(canGoBack)),
-      onUpdateCanGoForward: (callback) => ipcRenderer.on('update-can-go-forward', (event, canGoForward) => callback(canGoForward)),
-      onNavigationError: (callback) => ipcRenderer.on('navigation-error', (event, error) => callback(error)),
   
   // Remove listeners
   removeAllListeners: (channel) => ipcRenderer.removeAllListeners(channel)

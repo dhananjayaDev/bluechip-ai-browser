@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const isDev = process.env.NODE_ENV === 'development';
 
+// Load environment variables
+require('dotenv').config({ path: path.join(__dirname, '../.env.local') });
+
 // Database setup
 const Database = require('./database');
 
@@ -21,29 +24,109 @@ function createWindow() {
     fullscreen: false,
     maximized: true,
     titleBarStyle: 'default',
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: false,
-      webviewTag: true,
-      preload: path.join(__dirname, 'preload.js')
-    },
+  webPreferences: {
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    webviewTag: true,
+    preload: path.join(__dirname, 'preload.js')
+  },
     title: 'BlueChip AI Browser',
     icon: path.join(__dirname, '../public/icon.png'),
     show: false
   });
 
-  // Load the app - Use simple HTML file
-  mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
-  
-  // Don't open DevTools by default for full screen experience
-  // Uncomment the line below if you need DevTools for debugging
-  // mainWindow.webContents.openDevTools();
 
-  // Show window when ready
+  // Inject global polyfill before loading the app
+  mainWindow.webContents.on('will-navigate', () => {
+    mainWindow.webContents.executeJavaScript(`
+      console.log('will-navigate: Injecting global polyfills');
+      if (typeof global === 'undefined') {
+        window.global = window;
+        global = window;
+      }
+      if (typeof __dirname === 'undefined') {
+        window.__dirname = '';
+        __dirname = '';
+      }
+      if (typeof __filename === 'undefined') {
+        window.__filename = '';
+        __filename = '';
+      }
+      if (typeof process === 'undefined') {
+        window.process = { env: {} };
+        process = { env: {} };
+      }
+      console.log('will-navigate: Global polyfills injected');
+    `);
+  });
+
+  // Also inject on dom-ready
+  mainWindow.webContents.on('dom-ready', () => {
+    mainWindow.webContents.executeJavaScript(`
+      console.log('dom-ready: Injecting global polyfills');
+      if (typeof global === 'undefined') {
+        window.global = window;
+        global = window;
+      }
+      if (typeof __dirname === 'undefined') {
+        window.__dirname = '';
+        __dirname = '';
+      }
+      if (typeof __filename === 'undefined') {
+        window.__filename = '';
+        __filename = '';
+      }
+      if (typeof process === 'undefined') {
+        window.process = { env: {} };
+        process = { env: {} };
+      }
+      console.log('dom-ready: Global polyfills injected');
+    `);
+  });
+
+  // Load the app - Always use Next.js
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:3000/simple');
+  } else {
+    // In production, Next.js will be built and served
+    mainWindow.loadURL('http://localhost:3000');
+  }
+  
+  // Show the window when it's ready
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   });
+
+  // Prevent unnecessary reloads and requests
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log('Page loaded successfully');
+  });
+
+  // Add error handling
+  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Failed to load page:', errorCode, errorDescription);
+  });
+
+  mainWindow.webContents.on('crashed', () => {
+    console.error('Renderer process crashed');
+  });
+
+  // Disable unnecessary features that cause slowness
+  mainWindow.webContents.setUserAgent('BlueChip-AI-Browser/1.0.0');
+  
+  // Set Content Security Policy
+  mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': ["default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: http: https: ws: wss:; script-src 'self' 'unsafe-inline' 'unsafe-eval';"]
+      }
+    });
+  });
+  
+  // Open DevTools for debugging
+  mainWindow.webContents.openDevTools();
 
   // Handle window closed
   mainWindow.on('closed', () => {
@@ -160,11 +243,16 @@ ipcMain.handle('update-settings', async (event, settings) => {
 // AI operations
 ipcMain.handle('ai-chat', async (event, message, context) => {
   try {
-    const settings = await database.getSettings();
-    const apiKey = settings.gemini_api_key;
+    // Try to get API key from environment first, then from settings
+    let apiKey = process.env.GEMINI_API_KEY;
     
     if (!apiKey) {
-      throw new Error('Gemini API key not configured');
+      const settings = await database.getSettings();
+      apiKey = settings.gemini_api_key;
+    }
+    
+    if (!apiKey) {
+      throw new Error('Gemini API key not configured. Please set GEMINI_API_KEY in .env.local');
     }
     
     await aiService.initialize(apiKey);
@@ -177,11 +265,16 @@ ipcMain.handle('ai-chat', async (event, message, context) => {
 
 ipcMain.handle('ai-summarize', async (event, url, title) => {
   try {
-    const settings = await database.getSettings();
-    const apiKey = settings.gemini_api_key;
+    // Try to get API key from environment first, then from settings
+    let apiKey = process.env.GEMINI_API_KEY;
     
     if (!apiKey) {
-      throw new Error('Gemini API key not configured');
+      const settings = await database.getSettings();
+      apiKey = settings.gemini_api_key;
+    }
+    
+    if (!apiKey) {
+      throw new Error('Gemini API key not configured. Please set GEMINI_API_KEY in .env.local');
     }
     
     await aiService.initialize(apiKey);
@@ -205,7 +298,8 @@ ipcMain.handle('create-new-window', async () => {
       }
     });
     
-    await newWindow.loadFile(path.join(__dirname, '../public/index.html'));
+    // Always use Next.js
+    await newWindow.loadURL('http://localhost:3000');
     return { success: true };
   } catch (error) {
     console.error('Error creating new window:', error);
@@ -225,7 +319,8 @@ ipcMain.handle('create-private-window', async () => {
       }
     });
     
-    await newWindow.loadFile(path.join(__dirname, '../public/index.html'));
+    // Always use Next.js
+    await newWindow.loadURL('http://localhost:3000');
     return { success: true };
   } catch (error) {
     console.error('Error creating private window:', error);
@@ -246,7 +341,8 @@ ipcMain.handle('create-private-window-with-tor', async () => {
       }
     });
     
-    await newWindow.loadFile(path.join(__dirname, '../public/index.html'));
+    // Always use Next.js
+    await newWindow.loadURL('http://localhost:3000');
     return { success: true };
   } catch (error) {
     console.error('Error creating private window with Tor:', error);

@@ -1,7 +1,8 @@
-import '../styles/globals.css';
-
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+// Fix global is not defined error for Electron
+if (typeof global === 'undefined') {
+  window.global = window;
 }
 
-export default MyApp; 
+export default function App({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
