@@ -32,6 +32,27 @@ window.electronAPI = {
   aiChat: (message, context) => ipcRenderer.invoke('ai-chat', message, context),
   aiSummarize: (url, content) => ipcRenderer.invoke('ai-summarize', url, content),
   
+  // Burger Menu Operations
+  createNewWindow: () => ipcRenderer.invoke('create-new-window'),
+  createPrivateWindow: () => ipcRenderer.invoke('create-private-window'),
+  createPrivateWindowWithTor: () => ipcRenderer.invoke('create-private-window-with-tor'),
+  openBluechipAI: () => ipcRenderer.invoke('open-bluechip-ai'),
+  openBluechipVPN: () => ipcRenderer.invoke('open-bluechip-vpn'),
+  setSidebarMode: (mode) => ipcRenderer.invoke('set-sidebar-mode', mode),
+  openPasswords: () => ipcRenderer.invoke('open-passwords'),
+  openHistory: () => ipcRenderer.invoke('open-history'),
+  openBookmarks: () => ipcRenderer.invoke('open-bookmarks'),
+  openExtensions: () => ipcRenderer.invoke('open-extensions'),
+  deleteBrowsingData: () => ipcRenderer.invoke('delete-browsing-data'),
+  setZoom: (zoomLevel) => ipcRenderer.invoke('set-zoom', zoomLevel),
+  printPage: () => ipcRenderer.invoke('print-page'),
+  openFindAndEdit: () => ipcRenderer.invoke('open-find-and-edit'),
+  openSaveAndShare: () => ipcRenderer.invoke('open-save-and-share'),
+  openMoreTools: () => ipcRenderer.invoke('open-more-tools'),
+  openHelp: () => ipcRenderer.invoke('open-help'),
+  openSettings: () => ipcRenderer.invoke('open-settings'),
+  exitApp: () => ipcRenderer.invoke('exit-app'),
+  
   // Utils
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),

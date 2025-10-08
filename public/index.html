@@ -335,6 +335,164 @@
             margin: 0 4px;
         }
         
+        /* Burger Menu Styles */
+        .burger-menu-container {
+            position: relative;
+        }
+        
+        .burger-menu-panel {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 6px;
+            width: 280px;
+            background-color: #1f2937;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: slideDown 0.2s ease-out;
+        }
+        
+        .menu-section {
+            padding: 2px 0;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            color: #f9fafb;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .menu-item:hover {
+            background-color: #374151;
+        }
+        
+        .menu-item:active {
+            background-color: #4b5563;
+        }
+        
+        .menu-icon {
+            width: 14px;
+            height: 14px;
+            color: #9ca3af;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+        
+        .menu-label {
+            flex: 1;
+            font-size: 11px;
+            color: #f9fafb;
+        }
+        
+        .menu-shortcut {
+            font-size: 9px;
+            color: #9ca3af;
+            background-color: #374151;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        }
+        
+        .menu-separator {
+            height: 1px;
+            background-color: #374151;
+            margin: 1px 0;
+        }
+        
+        .menu-toggle-group {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .menu-toggle-btn {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            background-color: #374151;
+            color: #9ca3af;
+        }
+        
+        .menu-toggle-btn:hover {
+            background-color: #4b5563;
+            color: #d1d5db;
+        }
+        
+        .menu-toggle-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .menu-zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .menu-zoom-btn {
+            padding: 2px 4px;
+            border-radius: 3px;
+            background-color: #374151;
+            color: #9ca3af;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+            font-weight: bold;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .menu-zoom-btn:hover {
+            background-color: #4b5563;
+            color: #d1d5db;
+        }
+        
+        .menu-zoom-level {
+            font-size: 9px;
+            font-weight: 500;
+            color: #f9fafb;
+            min-width: 2rem;
+            text-align: center;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .burger-menu-panel {
+                width: 100vw;
+                max-width: 280px;
+                right: 0;
+                left: auto;
+            }
+            
+            .menu-item {
+                padding: 8px 12px;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -343,24 +501,24 @@
         <!-- Left Navigation Controls -->
         <div class="nav-controls">
             <button class="nav-btn" id="backBtn" onclick="goBack()" title="Back" disabled>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="15,18 9,12 15,6"></polyline>
                 </svg>
             </button>
             <button class="nav-btn" id="forwardBtn" onclick="goForward()" title="Forward" disabled>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9,18 15,12 9,6"></polyline>
                 </svg>
             </button>
             <button class="nav-btn" id="refreshBtn" onclick="refresh()" title="Refresh" disabled>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="23,4 23,10 17,10"></polyline>
                     <polyline points="1,20 1,14 7,14"></polyline>
                     <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
                 </svg>
             </button>
             <button class="nav-btn" id="homeBtn" onclick="goHome()" title="Home">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                 </svg>
@@ -372,7 +530,7 @@
             <div class="address-bar">
                 <div class="address-bar-left">
                     <div class="security-indicator" id="securityIndicator">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                             <circle cx="12" cy="16" r="1"></circle>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -387,13 +545,13 @@
                 </div>
                 <div class="address-bar-right">
                     <button class="address-btn" onclick="toggleBookmark()" title="Bookmark this page">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                     <div class="address-separator"></div>
                     <button class="address-btn" onclick="toggleExtensions()" title="Extensions">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                         </svg>
                     </button>
@@ -404,31 +562,335 @@
         <!-- Right Toolbar -->
         <div class="toolbar">
             <button class="toolbar-btn" onclick="toggleDownloads()" title="Downloads">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7,10 12,15 17,10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
             </button>
             <button class="toolbar-btn" onclick="toggleWallet()" title="Wallet">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                     <line x1="1" y1="10" x2="23" y2="10"></line>
                 </svg>
             </button>
             <button class="toolbar-btn" onclick="toggleShield()" title="Security & Privacy">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
             </button>
             <div class="toolbar-separator"></div>
-            <button class="toolbar-btn" onclick="toggleMenu()" title="Menu">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
+            <div class="burger-menu-container">
+                <button class="toolbar-btn" onclick="toggleMenu()" title="Menu">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                
+                <!-- Burger Menu Panel -->
+                <div id="burgerMenuPanel" class="burger-menu-panel" style="display: none;">
+                    <!-- New Windows/Tabs Section -->
+                    <div class="menu-section">
+                        <div class="menu-item" onclick="createNewTab()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">New tab</span>
+                            <span class="menu-shortcut">Ctrl+T</span>
+                        </div>
+                        <div class="menu-item" onclick="createNewWindow()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">New window</span>
+                            <span class="menu-shortcut">Ctrl+N</span>
+                        </div>
+                        <div class="menu-item" onclick="createPrivateWindow()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 12l2 2 4-4"></path>
+                                    <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"></path>
+                                    <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path>
+                                    <path d="M13 12h3a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M13 12H9a2 2 0 0 0-2 2v1"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">New private window</span>
+                            <span class="menu-shortcut">Ctrl+Shift+N</span>
+                        </div>
+                        <div class="menu-item" onclick="createPrivateWindowWithTor()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 12l2 2 4-4"></path>
+                                    <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"></path>
+                                    <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path>
+                                    <path d="M13 12h3a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M13 12H9a2 2 0 0 0-2 2v1"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">New private window with Tor</span>
+                            <span class="menu-shortcut">Shift+Alt+N</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="menu-separator"></div>
+                    
+                    <!-- Browser-Specific Features Section -->
+                    <div class="menu-section">
+                        <div class="menu-item" onclick="openBluechipAI()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Bluechip AI</span>
+                        </div>
+                        <div class="menu-item" onclick="toggleWallet()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Wallet</span>
+                        </div>
+                        <div class="menu-item" onclick="openBluechipVPN()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Bluechip VPN</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="menu-separator"></div>
+                    
+                    <!-- Sidebar Toggle Section -->
+                    <div class="menu-section">
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Sidebar</span>
+                            <div class="menu-toggle-group">
+                                <button class="menu-toggle-btn" id="sidebarOn" onclick="setSidebarMode('on')">On</button>
+                                <button class="menu-toggle-btn" id="sidebarAutohide" onclick="setSidebarMode('autohide')">Autohide</button>
+                                <button class="menu-toggle-btn active" id="sidebarOff" onclick="setSidebarMode('off')">Off</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="menu-separator"></div>
+                    
+                    <!-- Browser Data and Management Section -->
+                    <div class="menu-section">
+                        <div class="menu-item" onclick="openPasswords()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <circle cx="12" cy="16" r="1"></circle>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Passwords and autofill</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="menu-item" onclick="openHistory()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12,6 12,12 16,14"></polyline>
+                                </svg>
+                            </div>
+                            <span class="menu-label">History</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="menu-item" onclick="openBookmarks()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Bookmarks and lists</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="menu-item" onclick="toggleDownloads()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Downloads</span>
+                            <span class="menu-shortcut">Ctrl+J</span>
+                        </div>
+                        <div class="menu-item" onclick="openExtensions()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Extensions</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="menu-item" onclick="deleteBrowsingData()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3,6 5,6 21,6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Delete browsing data...</span>
+                            <span class="menu-shortcut">Ctrl+Shift+Del</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="menu-separator"></div>
+                    
+                    <!-- Zoom Control Section -->
+                    <div class="menu-section">
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Zoom</span>
+                            <div class="menu-zoom-controls">
+                                <button class="menu-zoom-btn" onclick="zoomOut()" title="Zoom out">-</button>
+                                <span class="menu-zoom-level" id="zoomLevel">100%</span>
+                                <button class="menu-zoom-btn" onclick="zoomIn()" title="Zoom in">+</button>
+                                <button class="menu-zoom-btn" onclick="resetZoom()" title="Reset zoom">100%</button>
+                                <button class="menu-zoom-btn" onclick="toggleFullscreen()" title="Full screen">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="menu-separator"></div>
+                    
+                    <!-- Print, Share, and Tools Section -->
+                    <div class="menu-section">
+                        <div class="menu-item" onclick="printPage()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 6,2 18,2 18,9"></polyline>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                    <rect x="6" y="14" width="12" height="8"></rect>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Print...</span>
+                            <span class="menu-shortcut">Ctrl+P</span>
+                        </div>
+                        <div class="menu-item" onclick="openFindAndEdit()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14,2 14,8 20,8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10,9 9,9 8,9"></polyline>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Find and edit</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="menu-item" onclick="openSaveAndShare()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Save and share</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="menu-item" onclick="openMoreTools()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">More tools</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Separator -->
+                    <div class="menu-separator"></div>
+                    
+                    <!-- Help, Settings, and Exit Section -->
+                    <div class="menu-section">
+                        <div class="menu-item" onclick="openHelp()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Help</span>
+                        </div>
+                        <div class="menu-item" onclick="openSettings()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Settings</span>
+                        </div>
+                        <div class="menu-item" onclick="exitApp()">
+                            <div class="menu-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <span class="menu-label">Exit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -447,14 +909,14 @@
     <div class="search-container">
         <div class="search-box">
             <div class="search-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.35-4.35"></path>
                 </svg>
             </div>
             <input type="text" class="search-input" placeholder="Search the web or enter a URL" id="searchInput">
             <div class="mic-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                     <line x1="12" y1="19" x2="12" y2="23"></line>
@@ -788,10 +1250,249 @@
             alert('Security & Privacy panel coming soon!');
         }
 
+        // Global state for burger menu
+        let isMenuOpen = false;
+        let currentZoom = 100;
+        let sidebarMode = 'off';
+        
         function toggleMenu() {
-            console.log('Menu clicked');
-            // TODO: Implement hamburger menu
-            alert('Menu panel coming soon!');
+            const menuPanel = document.getElementById('burgerMenuPanel');
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                menuPanel.style.display = 'block';
+                // Add click outside listener
+                setTimeout(() => {
+                    document.addEventListener('click', handleClickOutside);
+                }, 100);
+            } else {
+                menuPanel.style.display = 'none';
+                document.removeEventListener('click', handleClickOutside);
+            }
+        }
+        
+        function handleClickOutside(event) {
+            const menuPanel = document.getElementById('burgerMenuPanel');
+            const menuButton = event.target.closest('.burger-menu-container');
+            
+            if (!menuButton && !menuPanel.contains(event.target)) {
+                isMenuOpen = false;
+                menuPanel.style.display = 'none';
+                document.removeEventListener('click', handleClickOutside);
+            }
+        }
+        
+        // New Windows/Tabs Functions
+        function createNewTab() {
+            console.log('Creating new tab');
+            // For now, just go to home screen
+            goHome();
+            closeMenu();
+        }
+        
+        function createNewWindow() {
+            console.log('Creating new window');
+            // This would create a new Electron window
+            if (window.electronAPI) {
+                window.electronAPI.createNewWindow();
+            }
+            closeMenu();
+        }
+        
+        function createPrivateWindow() {
+            console.log('Creating private window');
+            // This would create a new private Electron window
+            if (window.electronAPI) {
+                window.electronAPI.createPrivateWindow();
+            }
+            closeMenu();
+        }
+        
+        function createPrivateWindowWithTor() {
+            console.log('Creating private window with Tor');
+            // This would create a new private Electron window with Tor
+            if (window.electronAPI) {
+                window.electronAPI.createPrivateWindowWithTor();
+            }
+            closeMenu();
+        }
+        
+        // Browser-Specific Features
+        function openBluechipAI() {
+            console.log('Opening Bluechip AI');
+            // This would open the AI sidebar or navigate to AI features
+            if (window.electronAPI) {
+                window.electronAPI.openBluechipAI();
+            }
+            closeMenu();
+        }
+        
+        function openBluechipVPN() {
+            console.log('Opening Bluechip VPN');
+            // This would open VPN settings or features
+            if (window.electronAPI) {
+                window.electronAPI.openBluechipVPN();
+            }
+            closeMenu();
+        }
+        
+        // Sidebar Functions
+        function setSidebarMode(mode) {
+            sidebarMode = mode;
+            console.log('Setting sidebar mode to:', mode);
+            
+            // Update button states
+            document.querySelectorAll('.menu-toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('sidebar' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
+            
+            // This would control the sidebar visibility
+            if (window.electronAPI) {
+                window.electronAPI.setSidebarMode(mode);
+            }
+            closeMenu();
+        }
+        
+        // Browser Data Functions
+        function openPasswords() {
+            console.log('Opening passwords');
+            if (window.electronAPI) {
+                window.electronAPI.openPasswords();
+            }
+            closeMenu();
+        }
+        
+        function openHistory() {
+            console.log('Opening history');
+            if (window.electronAPI) {
+                window.electronAPI.openHistory();
+            }
+            closeMenu();
+        }
+        
+        function openBookmarks() {
+            console.log('Opening bookmarks');
+            if (window.electronAPI) {
+                window.electronAPI.openBookmarks();
+            }
+            closeMenu();
+        }
+        
+        function openExtensions() {
+            console.log('Opening extensions');
+            if (window.electronAPI) {
+                window.electronAPI.openExtensions();
+            }
+            closeMenu();
+        }
+        
+        function deleteBrowsingData() {
+            console.log('Opening delete browsing data dialog');
+            if (window.electronAPI) {
+                window.electronAPI.deleteBrowsingData();
+            }
+            closeMenu();
+        }
+        
+        // Zoom Functions
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom + 10, 200);
+            updateZoomDisplay();
+            console.log('Zoom in to:', currentZoom + '%');
+            if (window.electronAPI) {
+                window.electronAPI.setZoom(currentZoom);
+            }
+        }
+        
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom - 10, 50);
+            updateZoomDisplay();
+            console.log('Zoom out to:', currentZoom + '%');
+            if (window.electronAPI) {
+                window.electronAPI.setZoom(currentZoom);
+            }
+        }
+        
+        function resetZoom() {
+            currentZoom = 100;
+            updateZoomDisplay();
+            console.log('Reset zoom to 100%');
+            if (window.electronAPI) {
+                window.electronAPI.setZoom(100);
+            }
+        }
+        
+        function updateZoomDisplay() {
+            const zoomLevel = document.getElementById('zoomLevel');
+            if (zoomLevel) {
+                zoomLevel.textContent = currentZoom + '%';
+            }
+        }
+        
+        // Tools Functions
+        function printPage() {
+            console.log('Printing page');
+            if (window.electronAPI) {
+                window.electronAPI.printPage();
+            }
+            closeMenu();
+        }
+        
+        function openFindAndEdit() {
+            console.log('Opening find and edit');
+            if (window.electronAPI) {
+                window.electronAPI.openFindAndEdit();
+            }
+            closeMenu();
+        }
+        
+        function openSaveAndShare() {
+            console.log('Opening save and share');
+            if (window.electronAPI) {
+                window.electronAPI.openSaveAndShare();
+            }
+            closeMenu();
+        }
+        
+        function openMoreTools() {
+            console.log('Opening more tools');
+            if (window.electronAPI) {
+                window.electronAPI.openMoreTools();
+            }
+            closeMenu();
+        }
+        
+        // Help and Settings Functions
+        function openHelp() {
+            console.log('Opening help');
+            if (window.electronAPI) {
+                window.electronAPI.openHelp();
+            }
+            closeMenu();
+        }
+        
+        function openSettings() {
+            console.log('Opening settings');
+            if (window.electronAPI) {
+                window.electronAPI.openSettings();
+            }
+            closeMenu();
+        }
+        
+        function exitApp() {
+            console.log('Exiting app');
+            if (window.electronAPI) {
+                window.electronAPI.exitApp();
+            }
+            closeMenu();
+        }
+        
+        function closeMenu() {
+            const menuPanel = document.getElementById('burgerMenuPanel');
+            isMenuOpen = false;
+            menuPanel.style.display = 'none';
+            document.removeEventListener('click', handleClickOutside);
         }
 
         function navigateToUrl() {

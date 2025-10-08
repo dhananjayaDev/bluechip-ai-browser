@@ -5,7 +5,9 @@ import TabBar from '../components/TabBar';
 import Sidebar from '../components/Sidebar';
 import AISidebar from '../components/AISidebar';
 import WebView from '../components/WebView';
+import PopularSites from '../components/PopularSites';
 import { useBrowserStore } from '../lib/store';
+import '../styles/burger-menu.css';
 
 export default function Home() {
   const {
@@ -21,6 +23,10 @@ export default function Home() {
     settings,
     updateSettings
   } = useBrowserStore();
+
+  // State for burger menu functionality
+  const [sidebarMode, setSidebarMode] = useState('off');
+  const [currentZoom, setCurrentZoom] = useState(100);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [aiSidebarOpen, setAiSidebarOpen] = useState(false);
@@ -108,6 +114,126 @@ export default function Home() {
 
   const isBookmarked = bookmarks.some(b => b.url === currentUrl);
 
+  // Burger menu handlers
+  const handleNewTab = () => {
+    createTab();
+  };
+
+  const handleNewWindow = () => {
+    // Open new window - in Electron this would create a new window
+    window.open(window.location.href, '_blank');
+  };
+
+  const handleNewPrivateWindow = () => {
+    // Open private window - would need to implement private browsing mode
+    console.log('Open private window');
+  };
+
+  const handleNewPrivateWindowWithTor = () => {
+    // Open private window with Tor - would need Tor integration
+    console.log('Open private window with Tor');
+  };
+
+  const handleBluechipAI = () => {
+    setAiSidebarOpen(true);
+  };
+
+  const handleWallet = () => {
+    // Open wallet - would need wallet integration
+    console.log('Open wallet');
+  };
+
+  const handleBluechipVPN = () => {
+    // Open VPN - would need VPN integration
+    console.log('Open Bluechip VPN');
+  };
+
+  const handleSidebarToggle = (mode) => {
+    setSidebarMode(mode);
+    if (mode === 'on') {
+      setSidebarOpen(true);
+    } else if (mode === 'off') {
+      setSidebarOpen(false);
+    }
+    // Autohide mode would need additional logic
+  };
+
+  const handlePasswords = () => {
+    // Open passwords manager
+    console.log('Open passwords');
+  };
+
+  const handleHistory = () => {
+    // Open history - could show in sidebar
+    console.log('Open history');
+  };
+
+  const handleBookmarks = () => {
+    // Open bookmarks - could show in sidebar
+    console.log('Open bookmarks');
+  };
+
+  const handleDownloads = () => {
+    // Open downloads
+    console.log('Open downloads');
+  };
+
+  const handleExtensions = () => {
+    // Open extensions
+    console.log('Open extensions');
+  };
+
+  const handleDeleteBrowsingData = () => {
+    // Open clear browsing data dialog
+    console.log('Delete browsing data');
+  };
+
+  const handleZoomChange = (zoom) => {
+    setCurrentZoom(zoom);
+    // Apply zoom to webview
+    if (webviewRef.current) {
+      webviewRef.current.style.zoom = `${zoom}%`;
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleFindAndEdit = () => {
+    // Open find and edit tools
+    console.log('Find and edit');
+  };
+
+  const handleSaveAndShare = () => {
+    // Open save and share options
+    console.log('Save and share');
+  };
+
+  const handleMoreTools = () => {
+    // Open more tools
+    console.log('More tools');
+  };
+
+  const handleHelp = () => {
+    // Open help
+    console.log('Help');
+  };
+
+  const handleSettings = () => {
+    // Open settings
+    console.log('Settings');
+  };
+
+  const handleExit = () => {
+    // Exit application
+    if (window.electronAPI) {
+      window.electronAPI.exit();
+    } else {
+      window.close();
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <Head>
@@ -125,6 +251,30 @@ export default function Home() {
         isLoading={isLoading}
         onAIToggle={() => setAiSidebarOpen(!aiSidebarOpen)}
         aiSidebarOpen={aiSidebarOpen}
+        onNewTab={handleNewTab}
+        onNewWindow={handleNewWindow}
+        onNewPrivateWindow={handleNewPrivateWindow}
+        onNewPrivateWindowWithTor={handleNewPrivateWindowWithTor}
+        onBluechipAI={handleBluechipAI}
+        onWallet={handleWallet}
+        onBluechipVPN={handleBluechipVPN}
+        onSidebarToggle={handleSidebarToggle}
+        sidebarMode={sidebarMode}
+        onPasswords={handlePasswords}
+        onHistory={handleHistory}
+        onBookmarks={handleBookmarks}
+        onDownloads={handleDownloads}
+        onExtensions={handleExtensions}
+        onDeleteBrowsingData={handleDeleteBrowsingData}
+        onZoomChange={handleZoomChange}
+        currentZoom={currentZoom}
+        onPrint={handlePrint}
+        onFindAndEdit={handleFindAndEdit}
+        onSaveAndShare={handleSaveAndShare}
+        onMoreTools={handleMoreTools}
+        onHelp={handleHelp}
+        onSettings={handleSettings}
+        onExit={handleExit}
       />
 
       {/* Tab Bar */}
@@ -175,14 +325,14 @@ export default function Home() {
 
 const WelcomeScreen = ({ onNavigate }) => {
   const popularSites = [
-    { name: 'Google', url: 'https://www.google.com', icon: '🔍' },
-    { name: 'YouTube', url: 'https://www.youtube.com', icon: '📺' },
-    { name: 'GitHub', url: 'https://github.com', icon: '💻' },
-    { name: 'Stack Overflow', url: 'https://stackoverflow.com', icon: '❓' },
-    { name: 'Reddit', url: 'https://www.reddit.com', icon: '🔴' },
-    { name: 'Wikipedia', url: 'https://en.wikipedia.org', icon: '📚' },
-    { name: 'Twitter', url: 'https://twitter.com', icon: '🐦' },
-    { name: 'LinkedIn', url: 'https://linkedin.com', icon: '💼' }
+    { name: 'Google', url: 'https://www.google.com', icon_type: 'static' },
+    { name: 'YouTube', url: 'https://www.youtube.com', icon_type: 'static' },
+    { name: 'GitHub', url: 'https://github.com', icon_type: 'static' },
+    { name: 'Stack Overflow', url: 'https://stackoverflow.com', icon_type: 'static' },
+    { name: 'Reddit', url: 'https://www.reddit.com', icon_type: 'static' },
+    { name: 'Wikipedia', url: 'https://en.wikipedia.org', icon_type: 'static' },
+    { name: 'Twitter', url: 'https://twitter.com', icon_type: 'static' },
+    { name: 'LinkedIn', url: 'https://linkedin.com', icon_type: 'static' }
   ];
 
   return (
@@ -227,21 +377,12 @@ const WelcomeScreen = ({ onNavigate }) => {
 
       {/* Popular Sites Grid */}
       <div className="w-full max-w-4xl">
-        <h2 className="text-sm text-gray-600 mb-4 text-center">Popular Sites</h2>
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-4">
-          {popularSites.map((site) => (
-            <div
-              key={site.name}
-              onClick={() => onNavigate(site.url)}
-              className="group flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-            >
-              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-gray-200 transition-colors">
-                <span className="text-xl">{site.icon}</span>
-              </div>
-              <span className="text-xs text-gray-600 text-center">{site.name}</span>
-            </div>
-          ))}
-        </div>
+        <PopularSites 
+          sites={popularSites}
+          onSiteClick={(site) => onNavigate(site.url)}
+          maxSites={8}
+          showPins={false}
+        />
       </div>
 
       {/* Quick Actions */}

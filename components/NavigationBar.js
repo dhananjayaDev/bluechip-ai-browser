@@ -7,6 +7,9 @@ import {
   StarIcon,
   SparklesIcon
 } from '@heroicons/react/24/outline';
+import BurgerMenu from './BurgerMenu';
+import SimpleBurgerMenu from './SimpleBurgerMenu';
+import WorkingBurgerMenu from './WorkingBurgerMenu';
 
 const NavigationBar = ({ 
   currentUrl, 
@@ -15,7 +18,31 @@ const NavigationBar = ({
   isBookmarked, 
   isLoading,
   onAIToggle,
-  aiSidebarOpen
+  aiSidebarOpen,
+  onNewTab,
+  onNewWindow,
+  onNewPrivateWindow,
+  onNewPrivateWindowWithTor,
+  onBluechipAI,
+  onWallet,
+  onBluechipVPN,
+  onSidebarToggle,
+  sidebarMode,
+  onPasswords,
+  onHistory,
+  onBookmarks,
+  onDownloads,
+  onExtensions,
+  onDeleteBrowsingData,
+  onZoomChange,
+  currentZoom,
+  onPrint,
+  onFindAndEdit,
+  onSaveAndShare,
+  onMoreTools,
+  onHelp,
+  onSettings,
+  onExit
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -152,6 +179,34 @@ const NavigationBar = ({
         >
           <SparklesIcon className="w-5 h-5" />
         </button>
+
+        {/* Burger Menu */}
+        <WorkingBurgerMenu
+          onNewTab={onNewTab}
+          onNewWindow={onNewWindow}
+          onNewPrivateWindow={onNewPrivateWindow}
+          onNewPrivateWindowWithTor={onNewPrivateWindowWithTor}
+          onBluechipAI={onBluechipAI}
+          onWallet={onWallet}
+          onBluechipVPN={onBluechipVPN}
+          onSidebarToggle={onSidebarToggle}
+          sidebarMode={sidebarMode}
+          onPasswords={onPasswords}
+          onHistory={onHistory}
+          onBookmarks={onBookmarks}
+          onDownloads={onDownloads}
+          onExtensions={onExtensions}
+          onDeleteBrowsingData={onDeleteBrowsingData}
+          onZoomChange={onZoomChange}
+          currentZoom={currentZoom}
+          onPrint={onPrint}
+          onFindAndEdit={onFindAndEdit}
+          onSaveAndShare={onSaveAndShare}
+          onMoreTools={onMoreTools}
+          onHelp={onHelp}
+          onSettings={onSettings}
+          onExit={onExit}
+        />
       </div>
     </div>
   );

@@ -1,0 +1,184 @@
+/* Burger Menu Dark Theme Styles */
+.burger-menu-panel {
+  background-color: #1f2937; /* Dark gray background */
+  border: 1px solid #374151;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.burger-menu-item {
+  color: #f9fafb; /* Light text */
+  transition: background-color 0.2s ease;
+}
+
+.burger-menu-item:hover {
+  background-color: #374151; /* Darker gray on hover */
+}
+
+.burger-menu-item:active {
+  background-color: #4b5563;
+}
+
+.burger-menu-separator {
+  border-color: #374151;
+}
+
+.burger-menu-shortcut {
+  background-color: #374151;
+  color: #9ca3af;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.burger-menu-toggle-group {
+  display: flex;
+  gap: 4px;
+}
+
+.burger-menu-toggle-btn {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.burger-menu-toggle-btn.active {
+  background-color: #3b82f6; /* Blue for active state */
+  color: white;
+}
+
+.burger-menu-toggle-btn.inactive {
+  background-color: #374151;
+  color: #9ca3af;
+}
+
+.burger-menu-toggle-btn.inactive:hover {
+  background-color: #4b5563;
+  color: #d1d5db;
+}
+
+.burger-menu-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.burger-menu-zoom-btn {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #374151;
+  color: #9ca3af;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: bold;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.burger-menu-zoom-btn:hover {
+  background-color: #4b5563;
+  color: #d1d5db;
+}
+
+.burger-menu-zoom-level {
+  font-size: 12px;
+  font-weight: 500;
+  color: #f9fafb;
+  min-width: 3rem;
+  text-align: center;
+}
+
+.burger-menu-fullscreen-btn {
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #374151;
+  color: #9ca3af;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.burger-menu-fullscreen-btn:hover {
+  background-color: #4b5563;
+  color: #d1d5db;
+}
+
+.burger-menu-icon {
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.burger-menu-label {
+  color: #f9fafb;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.burger-menu-arrow {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+}
+
+/* Animation for menu appearance */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.burger-menu-panel {
+  animation: slideDown 0.2s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .burger-menu-panel {
+    width: 100vw;
+    max-width: 320px;
+    right: 0;
+    left: auto;
+  }
+  
+  .burger-menu-item {
+    padding: 12px 16px;
+  }
+}
+
+/* Focus states for accessibility */
+.burger-menu-item:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+.burger-menu-toggle-btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.burger-menu-zoom-btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}

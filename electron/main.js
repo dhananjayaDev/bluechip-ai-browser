@@ -192,6 +192,232 @@ ipcMain.handle('ai-summarize', async (event, url, title) => {
   }
 });
 
+// Burger Menu IPC Handlers
+ipcMain.handle('create-new-window', async () => {
+  try {
+    const newWindow = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        preload: path.join(__dirname, 'preload.js')
+      }
+    });
+    
+    await newWindow.loadFile(path.join(__dirname, '../public/index.html'));
+    return { success: true };
+  } catch (error) {
+    console.error('Error creating new window:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('create-private-window', async () => {
+  try {
+    const newWindow = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        preload: path.join(__dirname, 'preload.js')
+      }
+    });
+    
+    await newWindow.loadFile(path.join(__dirname, '../public/index.html'));
+    return { success: true };
+  } catch (error) {
+    console.error('Error creating private window:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('create-private-window-with-tor', async () => {
+  try {
+    // For now, same as private window - Tor integration would be added later
+    const newWindow = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        preload: path.join(__dirname, 'preload.js')
+      }
+    });
+    
+    await newWindow.loadFile(path.join(__dirname, '../public/index.html'));
+    return { success: true };
+  } catch (error) {
+    console.error('Error creating private window with Tor:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-bluechip-ai', async () => {
+  try {
+    // This would open AI features - for now just log
+    console.log('Opening Bluechip AI features');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening Bluechip AI:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-bluechip-vpn', async () => {
+  try {
+    // This would open VPN features - for now just log
+    console.log('Opening Bluechip VPN features');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening Bluechip VPN:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('set-sidebar-mode', async (event, mode) => {
+  try {
+    // This would control sidebar visibility - for now just log
+    console.log('Setting sidebar mode to:', mode);
+    return { success: true };
+  } catch (error) {
+    console.error('Error setting sidebar mode:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-passwords', async () => {
+  try {
+    console.log('Opening passwords manager');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening passwords:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-history', async () => {
+  try {
+    console.log('Opening history manager');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening history:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-bookmarks', async () => {
+  try {
+    console.log('Opening bookmarks manager');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening bookmarks:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-extensions', async () => {
+  try {
+    console.log('Opening extensions manager');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening extensions:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('delete-browsing-data', async () => {
+  try {
+    console.log('Opening delete browsing data dialog');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening delete browsing data:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('set-zoom', async (event, zoomLevel) => {
+  try {
+    console.log('Setting zoom level to:', zoomLevel);
+    return { success: true };
+  } catch (error) {
+    console.error('Error setting zoom:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('print-page', async () => {
+  try {
+    console.log('Printing current page');
+    return { success: true };
+  } catch (error) {
+    console.error('Error printing page:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-find-and-edit', async () => {
+  try {
+    console.log('Opening find and edit tools');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening find and edit:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-save-and-share', async () => {
+  try {
+    console.log('Opening save and share tools');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening save and share:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-more-tools', async () => {
+  try {
+    console.log('Opening more tools');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening more tools:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-help', async () => {
+  try {
+    console.log('Opening help');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening help:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('open-settings', async () => {
+  try {
+    console.log('Opening settings');
+    return { success: true };
+  } catch (error) {
+    console.error('Error opening settings:', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('exit-app', async () => {
+  try {
+    console.log('Exiting application');
+    app.quit();
+    return { success: true };
+  } catch (error) {
+    console.error('Error exiting app:', error);
+    throw error;
+  }
+});
+
 // Security: Prevent new window creation
 app.on('web-contents-created', (event, contents) => {
   contents.on('new-window', (event, navigationUrl) => {

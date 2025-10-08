@@ -57,6 +57,21 @@ class Database {
         key TEXT NOT NULL UNIQUE,
         value TEXT NOT NULL,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`,
+      
+      // Popular sites table for user-specific popular sites
+      `CREATE TABLE IF NOT EXISTS popular_sites (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        url TEXT NOT NULL UNIQUE,
+        icon_type TEXT DEFAULT 'auto',
+        icon_name TEXT,
+        icon_url TEXT,
+        visit_count INTEGER DEFAULT 1,
+        last_visited DATETIME DEFAULT CURRENT_TIMESTAMP,
+        is_pinned BOOLEAN DEFAULT FALSE,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`
     ];
 
@@ -238,6 +253,64 @@ class Database {
         LIMIT 1000
       )
     `);
+  }
+
+  // Popular sites operations
+  async getPopularSites(limit = 20) {
+    return this.all(`
+      SELECT * FROM popular_sites 
+      ORDER BY is_pinned DESC, visit_count DESC, last_visited DESC 
+      LIMIT ?
+    `, [limit]);
+  }
+
+  async addPopularSite(site) {
+    const { title, url, icon_type = 'auto', icon_name, icon_url } = site;
+    const result = await this.run(
+      'INSERT OR REPLACE INTO popular_sites (title, url, icon_type, icon_name, icon_url, updated_at) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)',
+      [title, url, icon_type, icon_name || null, icon_url || null]
+    );
+    return result;
+  }
+
+  async updatePopularSiteVisit(url) {
+    return this.run(`
+      UPDATE popular_sites 
+      SET visit_count = visit_count + 1, 
+          last_visited = CURRENT_TIMESTAMP,
+          updated_at = CURRENT_TIMESTAMP 
+      WHERE url = ?
+    `, [url]);
+  }
+
+  async pinPopularSite(id, isPinned = true) {
+    return this.run(
+      'UPDATE popular_sites SET is_pinned = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [isPinned, id]
+    );
+  }
+
+  async removePopularSite(id) {
+    return this.run('DELETE FROM popular_sites WHERE id = ?', [id]);
+  }
+
+  async getPopularSiteByUrl(url) {
+    return this.get('SELECT * FROM popular_sites WHERE url = ?', [url]);
+  }
+
+  async searchPopularSites(query) {
+    const searchQuery = `%${query}%`;
+    return this.all(
+      'SELECT * FROM popular_sites WHERE title LIKE ? OR url LIKE ? ORDER BY is_pinned DESC, visit_count DESC',
+      [searchQuery, searchQuery]
+    );
+  }
+
+  async updatePopularSiteIcon(id, iconType, iconName, iconUrl) {
+    return this.run(
+      'UPDATE popular_sites SET icon_type = ?, icon_name = ?, icon_url = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [iconType, iconName, iconUrl, id]
+    );
   }
 
   // Close database connection
