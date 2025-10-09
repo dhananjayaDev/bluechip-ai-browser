@@ -10,6 +10,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 const AISidebar = ({ isOpen, onToggle, currentUrl, currentTitle }) => {
+  console.log('AISidebar rendered with isOpen:', isOpen);
+  
   const [activeMode, setActiveMode] = useState('chat');
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');

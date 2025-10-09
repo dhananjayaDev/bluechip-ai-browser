@@ -116,6 +116,7 @@
             width: 100%;
             padding: 16px 50px;
             font-size: 16px;
+            font-weight: 500;
             border: 1px solid #dfe1e5;
             border-radius: 24px;
             outline: none;
@@ -127,13 +128,513 @@
             box-shadow: 0 2px 5px 1px rgba(64,60,67,.28);
         }
         
-        .mic-icon {
+        .ai-mode-btn {
+            background: #f5f5f5 !important;
+            color: black !important;
+            border: none !important;
+            border-radius: 20px !important;
+            padding: 8px 16px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            transition: all 0.3s ease !important;
+            position: absolute !important;
+            right: 16px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+        }
+
+        .ai-mode-btn:hover {
+            background: white !important;
+            border: 1px solid black !important;
+        }
+
+
+
+        /* AI Mode Interface */
+        .ai-mode-interface {
+            display: none;
+            position: fixed;
+            top: 40px; /* Start below main navigation bar */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 40px); /* Account for main nav bar height */
+            background: white;
+            z-index: 2000;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .ai-mode-interface.active {
+            display: flex;
+        }
+
+        .ai-mode-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-mode-content.chat-mode {
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+
+
+        .ai-mode-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ai-mode-title {
+            font-size: 48px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .ai-mode-subtitle {
+            font-size: 16px;
+            color: #5f6368;
+            margin-bottom: 0;
+        }
+
+        .ai-mode-input-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .ai-mode-chat-container.active ~ .ai-mode-input-container {
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+        }
+
+        .ai-mode-input {
+            width: 100%;
+            padding: 20px 24px;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+            background: white;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+        }
+
+        .ai-mode-input:focus {
+            border-color: #4285f4;
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+        }
+
+        .ai-mode-input-icons {
             position: absolute;
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-mode-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .ai-mode-icon:hover {
+            opacity: 1;
+        }
+
+        .ai-mode-send-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ai-mode-send-btn:hover {
+            background: #3367d6;
+            transform: scale(1.05);
+        }
+
+        .ai-mode-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .ai-mode-suggestion {
+            background: #f8f9fa;
+            border: 1px solid #e8eaed;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-mode-suggestion:hover {
+            background: #f1f3f4;
+            border-color: #dadce0;
+            transform: translateY(-1px);
+        }
+
+        .ai-mode-suggestion-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+        }
+
+        .ai-mode-suggestion-text {
+            font-size: 14px;
+            color: #202124;
+        }
+
+
+        /* AI Mode Chat Area */
+        .ai-mode-chat-container {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .ai-mode-chat-container.active {
+            display: flex;
+        }
+
+        .ai-mode-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 40px;
+            margin-bottom: 20px;
+            width: 100%;
+            /* Hide scrollbar while keeping scroll functionality */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+
+        .ai-mode-chat-messages::-webkit-scrollbar {
+            display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+        }
+
+        .ai-mode-message {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .ai-mode-message.user {
+            justify-content: flex-end;
+        }
+
+        .ai-mode-message-bubble {
+            max-width: 85%;
+            padding: 16px 20px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        /* AI Response Formatting */
+        .ai-mode-message-bubble h1,
+        .ai-mode-message-bubble h2,
+        .ai-mode-message-bubble h3,
+        .ai-mode-message-bubble h4,
+        .ai-mode-message-bubble h5,
+        .ai-mode-message-bubble h6 {
+            margin: 16px 0 8px 0;
+            font-weight: 600;
+            color: #202124;
+        }
+
+        .ai-mode-message-bubble h1 { font-size: 20px; }
+        .ai-mode-message-bubble h2 { font-size: 18px; }
+        .ai-mode-message-bubble h3 { font-size: 16px; }
+
+        .ai-mode-message-bubble p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .ai-mode-message-bubble ul,
+        .ai-mode-message-bubble ol {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+
+        .ai-mode-message-bubble li {
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        .ai-mode-message-bubble strong,
+        .ai-mode-message-bubble b {
+            font-weight: 600;
+            color: #1a73e8;
+        }
+
+        .ai-mode-message-bubble em,
+        .ai-mode-message-bubble i {
+            font-style: italic;
+            color: #5f6368;
+        }
+
+        .ai-mode-message-bubble code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #d73a49;
+        }
+
+        .ai-mode-message-bubble pre {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #1a73e8;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+
+        .ai-mode-message-bubble pre code {
+            background: none;
+            padding: 0;
+            color: #202124;
+        }
+
+        .ai-mode-message-bubble blockquote {
+            border-left: 4px solid #e8eaed;
+            padding-left: 16px;
+            margin: 12px 0;
+            color: #5f6368;
+            font-style: italic;
+        }
+
+        .ai-mode-message-bubble hr {
+            border: none;
+            border-top: 1px solid #e8eaed;
+            margin: 16px 0;
+        }
+
+        .ai-mode-message-bubble a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .ai-mode-message-bubble a:hover {
+            text-decoration: underline;
+        }
+
+        .ai-mode-message-bubble table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        .ai-mode-message-bubble th,
+        .ai-mode-message-bubble td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e8eaed;
+        }
+
+        .ai-mode-message-bubble th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .ai-mode-message.user .ai-mode-message-bubble {
+            background: #4285f4;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-mode-message.assistant .ai-mode-message-bubble {
+            background: #f1f3f4;
+            color: #202124;
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-mode-message.error .ai-mode-message-bubble {
+            background: #fce8e6;
+            color: #d93025;
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-mode-loading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #5f6368;
+            font-style: italic;
+        }
+
+        .ai-mode-loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .ai-mode-loading-dot {
+            width: 6px;
+            height: 6px;
+            background: #5f6368;
+            border-radius: 50%;
+            animation: ai-mode-bounce 1.4s infinite ease-in-out both;
+        }
+
+        .ai-mode-loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .ai-mode-loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes ai-mode-bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        .ai-mode-welcome {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .ai-mode-welcome-title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .ai-mode-welcome-subtitle {
+            font-size: 16px;
+            color: #5f6368;
+            margin-bottom: 40px;
+        }
+
+        /* AI Chat Mode - Fade Out Favorite Websites Only */
+        .ai-chat-mode .sites-section {
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+        }
+
+        /* AI Chat Mode - Simple Left to Right Slide Effect */
+        .ai-chat-mode .logo-section {
+            position: fixed;
+            top: 10px;
+            left: -50px; /* Adjusted to be a little bit right from -60px */
+            transform: scale(0.6);
+            z-index: 1000;
+            animation: slideInFromLeft 0.5s ease-out;
+        }
+
+        .ai-chat-mode .logo-section .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .ai-chat-mode .logo-section .logo-text {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .ai-chat-mode .logo-section .logo-subtitle {
+            font-size: 10px;
+        }
+
+
+
+        .ai-loading-dots {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #667eea;
+            margin: 0 2px;
+            animation: ai-loading 1.4s infinite ease-in-out both;
+        }
+
+        .ai-loading-dots:nth-child(1) { animation-delay: -0.32s; }
+        .ai-loading-dots:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes ai-loading {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+
+
+        /* Simple Left to Right Slide Animation */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: scale(0.6) translateX(-100px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(0.6) translateX(0px);
+                opacity: 1;
+            }
+        }
+        
+        .mic-icon {
+            position: absolute;
+            right: 120px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #9aa0a6;
             font-size: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .mic-icon:hover {
+            background-color: #f5f5f5;
         }
         
         .sites-section {
@@ -914,7 +1415,13 @@
                     <path d="m21 21-4.35-4.35"></path>
                 </svg>
             </div>
-            <input type="text" class="search-input" placeholder="Search the web or enter a URL" id="searchInput">
+            <textarea class="search-input" placeholder="Search the web or enter a URL" id="searchInput" rows="1" style="resize: none;"></textarea>
+            <button class="ai-mode-btn" onclick="openAIMode()" title="AI Mode">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"></polygon>
+                </svg>
+                <span>AI Mode</span>
+            </button>
             <div class="mic-icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
@@ -923,6 +1430,7 @@
                     <line x1="8" y1="23" x2="16" y2="23"></line>
                 </svg>
             </div>
+            
         </div>
     </div>
 
@@ -1006,6 +1514,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script>
         // Fix global issue for Electron
@@ -1113,6 +1623,8 @@
                 
                 console.log('Navigation successful');
                 currentUrl = url;
+                window.currentUrl = url; // Set global variable for AI sidebar
+                window.currentTitle = 'Loading...'; // Will be updated when page loads
                 isSearchMode = true;
                 
                 // Update the address bar
@@ -1136,6 +1648,13 @@
             console.log('Go back clicked. Current index:', currentHistoryIndex);
             console.log('Session history:', sessionHistory);
             
+            // Close AI Mode if it's open
+            const aiModeInterface = document.getElementById('aiModeInterface');
+            if (aiModeInterface && aiModeInterface.classList.contains('active')) {
+                console.log('Closing AI Mode before going back');
+                closeAIMode();
+            }
+            
             if (currentHistoryIndex > 0) {
                 // Go back in our session history
                 currentHistoryIndex--;
@@ -1143,8 +1662,12 @@
                 
                 if (previousEntry.url === 'home') {
                     // Go back to home screen
-                    goHome();
-                    return; // goHome() will handle button states
+                    navigateToHomeScreen();
+                    updateButtonStates('home');
+                } else if (previousEntry.url === 'ai-mode') {
+                    // This shouldn't happen, but handle it gracefully
+                    navigateToHomeScreen();
+                    updateButtonStates('home');
                 } else {
                     // Load the previous URL in webview
                     const webview = document.getElementById('webContent');
@@ -1167,18 +1690,23 @@
                         updateButtonStates('browser');
                     }
                 }
-            } else if (currentHistoryIndex === 0) {
-                // Go back to home screen
-                goHome();
             } else {
-                // No history, go to home
-                goHome();
+                // No history to go back to, just go to home
+                navigateToHomeScreen();
+                updateButtonStates('home');
             }
         }
 
         async function goForward() {
             console.log('Go forward clicked. Current index:', currentHistoryIndex);
             console.log('Session history:', sessionHistory);
+            
+            // Close AI Mode if it's open
+            const aiModeInterface = document.getElementById('aiModeInterface');
+            if (aiModeInterface && aiModeInterface.classList.contains('active')) {
+                console.log('Closing AI Mode before going forward');
+                closeAIMode();
+            }
             
             if (currentHistoryIndex < sessionHistory.length - 1) {
                 // Go forward in our session history
@@ -1187,8 +1715,15 @@
                 
                 if (nextEntry.url === 'home') {
                     // Go to home screen
-                    goHome();
-                    return; // goHome() will handle button states
+                    navigateToHomeScreen();
+                    updateButtonStates('home');
+                } else if (nextEntry.url === 'ai-mode') {
+                    // Open AI Mode
+                    const aiModeInterface = document.getElementById('aiModeInterface');
+                    if (aiModeInterface) {
+                        aiModeInterface.classList.add('active');
+                        updateButtonStates('browser');
+                    }
                 } else {
                     // Load the next URL in webview
                     const webview = document.getElementById('webContent');
@@ -1215,6 +1750,13 @@
         }
 
         async function refresh() {
+            // Close AI Mode if it's open
+            const aiModeInterface = document.getElementById('aiModeInterface');
+            if (aiModeInterface && aiModeInterface.classList.contains('active')) {
+                console.log('Closing AI Mode before refresh');
+                closeAIMode();
+            }
+            
             const webview = document.getElementById('webContent');
             if (webview) {
                 webview.reload();
@@ -1224,13 +1766,35 @@
         async function goHome() {
             console.log('=== GO HOME CALLED ===');
             
-            // Only add home to history if we're not already at home
-            if (sessionHistory.length === 0) {
-                addToHistory('home', 'BlueChip AI Browser Home');
-            } else if (currentHistoryIndex < 0 || sessionHistory[currentHistoryIndex].url !== 'home') {
-                addToHistory('home', 'BlueChip AI Browser Home');
+            // Close AI Mode if it's open
+            const aiModeInterface = document.getElementById('aiModeInterface');
+            if (aiModeInterface && aiModeInterface.classList.contains('active')) {
+                console.log('Closing AI Mode before going home');
+                closeAIMode();
             }
             
+            // Navigate to home screen and reset history position to home
+            navigateToHomeScreen();
+            
+            // Reset history position to the first home entry
+            // Find the first 'home' entry in history and set index to that
+            const homeIndex = sessionHistory.findIndex(entry => entry.url === 'home');
+            if (homeIndex !== -1) {
+                currentHistoryIndex = homeIndex;
+                console.log('Reset history position to home index:', currentHistoryIndex);
+            } else {
+                // If no home entry found, add one and set index to 0
+                addToHistory('home', 'BlueChip AI Browser Home');
+                currentHistoryIndex = 0;
+                console.log('Added home to history and set index to 0');
+            }
+            
+            // Update button states for home view
+            updateButtonStates('home');
+            console.log('Go home completed successfully');
+        }
+
+        function navigateToHomeScreen() {
             // Hide webview container completely
             const webviewContainer = document.getElementById('webviewContainer');
             if (webviewContainer) {
@@ -1260,10 +1824,548 @@
                 addressBar.value = '';
                 addressBar.placeholder = 'Search Google or type a URL';
             }
+        }
+
+        function openAIMode() {
+            console.log('Opening AI Mode...');
             
-            // Update button states for home view
-            updateButtonStates('home');
-            console.log('Go home completed successfully');
+            // Add AI Mode to session history so back button works
+            addToHistory('ai-mode', 'AI Mode');
+            
+            const aiModeInterface = document.getElementById('aiModeInterface');
+            if (aiModeInterface) {
+                aiModeInterface.classList.add('active');
+                
+                // Update button states to enable back button
+                updateButtonStates('browser');
+                
+                // Focus on input
+                setTimeout(() => {
+                    const input = document.getElementById('aiModeInput');
+                    if (input) {
+                        input.focus();
+                    }
+                }, 100);
+            }
+        }
+
+        function closeAIMode() {
+            console.log('Closing AI Mode...');
+            const aiModeInterface = document.getElementById('aiModeInterface');
+            if (aiModeInterface) {
+                aiModeInterface.classList.remove('active');
+                
+                // Reset to welcome screen
+                const welcome = document.getElementById('aiModeWelcome');
+                const chatContainer = document.getElementById('aiModeChatContainer');
+                const suggestions = document.getElementById('aiModeSuggestions');
+                const content = document.querySelector('.ai-mode-content');
+                
+                if (welcome) welcome.style.display = 'block';
+                if (chatContainer) chatContainer.classList.remove('active');
+                if (suggestions) suggestions.style.display = 'grid';
+                if (content) content.classList.remove('chat-mode');
+                
+                // Clear chat messages
+                const messagesContainer = document.getElementById('aiModeChatMessages');
+                if (messagesContainer) {
+                    messagesContainer.innerHTML = '';
+                }
+            }
+        }
+
+        function handleAIModeKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendAIModeMessage();
+            }
+        }
+
+        function askAIModeQuestion(question) {
+            const input = document.getElementById('aiModeInput');
+            if (input) {
+                input.value = question;
+                sendAIModeMessage();
+            }
+        }
+
+        async function sendAIModeMessage() {
+            const input = document.getElementById('aiModeInput');
+            const message = input.value.trim();
+            
+            console.log('sendAIModeMessage called with message:', message);
+            
+            if (!message) {
+                console.log('No message provided');
+                return;
+            }
+            
+            // Clear input
+            input.value = '';
+            
+            // Show chat container and hide welcome screen
+            console.log('Calling showAIModeChat...');
+            showAIModeChat();
+            
+            // Add user message to chat
+            console.log('Adding user message...');
+            addAIModeMessage(message, 'user');
+            
+            // Add loading message
+            console.log('Adding loading message...');
+            addAIModeMessage('Thinking...', 'assistant', true);
+            
+            // Call AI API
+            console.log('Calling AI API...');
+            callAIModeAPI(message);
+        }
+
+        function showAIModeChat() {
+            const welcome = document.getElementById('aiModeWelcome');
+            const chatContainer = document.getElementById('aiModeChatContainer');
+            const suggestions = document.getElementById('aiModeSuggestions');
+            const content = document.querySelector('.ai-mode-content');
+            
+            console.log('Showing AI Mode Chat...');
+            console.log('Welcome element:', welcome);
+            console.log('Chat container element:', chatContainer);
+            console.log('Suggestions element:', suggestions);
+            
+            if (welcome) {
+                welcome.style.display = 'none';
+                console.log('Hidden welcome screen');
+            }
+            if (chatContainer) {
+                chatContainer.classList.add('active');
+                console.log('Added active class to chat container');
+            }
+            if (suggestions) {
+                suggestions.style.display = 'none';
+                console.log('Hidden suggestions');
+            }
+            if (content) {
+                content.classList.add('chat-mode');
+                console.log('Added chat-mode class to content');
+            }
+        }
+
+        function addAIModeMessage(message, sender, isLoading = false) {
+            const messagesContainer = document.getElementById('aiModeChatMessages');
+            console.log('addAIModeMessage called:', { message, sender, isLoading, messagesContainer });
+            
+            if (!messagesContainer) {
+                console.error('Messages container not found!');
+                return;
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-mode-message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'ai-mode-message-bubble';
+            
+            if (isLoading) {
+                bubbleDiv.innerHTML = `
+                    <div class="ai-mode-loading">
+                        <span>Thinking</span>
+                        <div class="ai-mode-loading-dots">
+                            <div class="ai-mode-loading-dot"></div>
+                            <div class="ai-mode-loading-dot"></div>
+                            <div class="ai-mode-loading-dot"></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                bubbleDiv.innerHTML = message;
+            }
+            
+            messageDiv.appendChild(bubbleDiv);
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            console.log('Message added to chat:', messageDiv);
+        }
+
+        async function callAIModeAPI(message) {
+            try {
+                // Get current page content for context
+                let pageContent = '';
+                let pageContext = '';
+                
+                if (window.currentUrl && window.currentUrl !== '') {
+                    try {
+                        pageContent = await getCurrentPageContent();
+                        pageContext = `Current Page: ${window.currentTitle || 'Unknown'} (${window.currentUrl})\n\nPage Content:\n${pageContent}`;
+                    } catch (error) {
+                        console.log('Could not get page content:', error);
+                        pageContext = `Current Page: ${window.currentTitle || 'Unknown'} (${window.currentUrl})`;
+                    }
+                }
+                
+                let response;
+            if (window.electronAPI) {
+                    // Use Electron API with page context
+                    response = await window.electronAPI.aiChat(message, pageContext);
+            } else {
+                    // Use web API
+                    const apiResponse = await fetch('/api/ai/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            context: pageContext
+                        })
+                    });
+                    const data = await apiResponse.json();
+                    response = data.response;
+                }
+                
+                // Remove loading message
+                const messagesContainer = document.getElementById('aiModeChatMessages');
+                const loadingMessage = messagesContainer.lastElementChild;
+                if (loadingMessage && loadingMessage.querySelector('.ai-mode-loading')) {
+                    loadingMessage.remove();
+                }
+                
+                // Add AI response
+                addAIModeMessage(response || 'Sorry, I could not process your request.');
+                
+            } catch (error) {
+                console.error('AI API Error:', error);
+                
+                // Remove loading message
+                const messagesContainer = document.getElementById('aiModeChatMessages');
+                const loadingMessage = messagesContainer.lastElementChild;
+                if (loadingMessage && loadingMessage.querySelector('.ai-mode-loading')) {
+                    loadingMessage.remove();
+                }
+                
+                // Add error message
+                addAIModeMessage('Sorry, there was an error connecting to the AI service.', 'error');
+            }
+        }
+
+
+
+
+        function switchAITab(tab) {
+            // Hide all tab contents
+            document.getElementById('aiChatTab').style.display = 'none';
+            document.getElementById('aiSummarizeTab').style.display = 'none';
+            document.getElementById('aiSettingsTab').style.display = 'none';
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.ai-sidebar-tab').forEach(t => t.classList.remove('active'));
+            
+            // Show selected tab and add active class
+            if (tab === 'chat') {
+                document.getElementById('aiChatTab').style.display = 'block';
+                document.querySelector('.ai-sidebar-tab[onclick="switchAITab(\'chat\')"]').classList.add('active');
+            } else if (tab === 'summarize') {
+                document.getElementById('aiSummarizeTab').style.display = 'block';
+                document.querySelector('.ai-sidebar-tab[onclick="switchAITab(\'summarize\')"]').classList.add('active');
+            } else if (tab === 'settings') {
+                document.getElementById('aiSettingsTab').style.display = 'block';
+                document.querySelector('.ai-sidebar-tab[onclick="switchAITab(\'settings\')"]').classList.add('active');
+                loadApiKeyFromSettings();
+            }
+        }
+
+        async function loadApiKeyFromSettings() {
+            try {
+                if (window.electronAPI) {
+                    const settings = await window.electronAPI.getSettings();
+                    const apiKeyInput = document.getElementById('apiKeyInput');
+                    if (apiKeyInput && settings.gemini_api_key) {
+                        apiKeyInput.value = settings.gemini_api_key;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load API key:', error);
+            }
+        }
+
+        async function saveApiKey() {
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            const apiKey = apiKeyInput.value.trim();
+            
+            if (!apiKey) {
+                alert('Please enter a valid API key');
+                return;
+            }
+            
+            try {
+                if (window.electronAPI) {
+                    const settings = await window.electronAPI.getSettings();
+                    settings.gemini_api_key = apiKey;
+                    await window.electronAPI.updateSettings(settings);
+                    
+                    // Show success message
+                    addAIMessage('API key saved successfully! You can now use AI features.', 'assistant');
+                    
+                    // Switch to chat tab
+                    switchAITab('chat');
+                } else {
+                    alert('API key saved (browser mode)');
+                }
+            } catch (error) {
+                console.error('Failed to save API key:', error);
+                alert('Failed to save API key. Please try again.');
+            }
+        }
+
+        function handleAIKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendAIMessage();
+            }
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addAIMessage(message, 'user');
+            
+            // Clear input
+            input.value = '';
+            
+            // Show loading
+            addAIMessage('AI is thinking...', 'assistant', true);
+            
+            // Call AI API
+            callAIAPI(message);
+        }
+
+        function addAIMessage(content, type, isLoading = false) {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${type}`;
+            
+            if (isLoading) {
+                messageDiv.innerHTML = `
+                    <div class="ai-loading">
+                        <span>${content}</span>
+                        <div class="ai-loading-dots"></div>
+                        <div class="ai-loading-dots"></div>
+                        <div class="ai-loading-dots"></div>
+                    </div>
+                `;
+            } else {
+                messageDiv.textContent = content;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        async function callAIAPI(message) {
+            try {
+                // Get current page content for context
+                let pageContent = '';
+                let pageContext = '';
+                
+                if (window.currentUrl && window.currentUrl !== '') {
+                    try {
+                        pageContent = await getCurrentPageContent();
+                        pageContext = `Current Page: ${window.currentTitle || 'Unknown'} (${window.currentUrl})\n\nPage Content:\n${pageContent}`;
+                    } catch (error) {
+                        console.log('Could not get page content:', error);
+                        pageContext = `Current Page: ${window.currentTitle || 'Unknown'} (${window.currentUrl})`;
+                    }
+                }
+                
+                let response;
+                if (window.electronAPI) {
+                    // Use Electron API with page context
+                    response = await window.electronAPI.aiChat(message, pageContext);
+                } else {
+                    // Use web API
+                    const apiResponse = await fetch('/api/ai/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            context: pageContext
+                        })
+                    });
+                    const data = await apiResponse.json();
+                    response = data.response;
+                }
+                
+                // Remove loading message
+                const messagesContainer = document.getElementById('aiChatMessages');
+                const loadingMessage = messagesContainer.lastElementChild;
+                if (loadingMessage && loadingMessage.querySelector('.ai-loading')) {
+                    loadingMessage.remove();
+                }
+                
+                // Add AI response
+                addAIMessage(response || 'Sorry, I could not process your request.');
+                
+            } catch (error) {
+                console.error('AI API Error:', error);
+                
+                // Remove loading message
+                const messagesContainer = document.getElementById('aiChatMessages');
+                const loadingMessage = messagesContainer.lastElementChild;
+                if (loadingMessage && loadingMessage.querySelector('.ai-loading')) {
+                    loadingMessage.remove();
+                }
+                
+                // Add error message
+                addAIMessage('Sorry, there was an error connecting to the AI service.', 'error');
+            }
+        }
+
+        async function getCurrentPageContent() {
+            return new Promise((resolve, reject) => {
+                const webview = document.getElementById('webContent');
+                if (!webview) {
+                    reject(new Error('Webview not found'));
+                    return;
+                }
+
+                // Execute script in webview to extract content
+                webview.executeJavaScript(`
+                    (function() {
+                        try {
+                            // Extract text content from the page
+                            const body = document.body;
+                            if (!body) return 'No content available';
+                            
+                            // Remove script and style elements
+                            const scripts = body.querySelectorAll('script, style, noscript');
+                            scripts.forEach(el => el.remove());
+                            
+                            // Get main content areas
+                            const mainContent = body.querySelector('main, article, .content, #content, .main-content') || body;
+                            
+                            // Extract text content
+                            let content = mainContent.innerText || mainContent.textContent || '';
+                            
+                            // Clean up the content
+                            content = content
+                                .replace(/\\s+/g, ' ') // Replace multiple whitespace with single space
+                                .replace(/\\n\\s*\\n/g, '\\n\\n') // Clean up line breaks
+                                .trim();
+                            
+                            // Limit content length to avoid token limits
+                            if (content.length > 8000) {
+                                content = content.substring(0, 8000) + '...';
+                            }
+                            
+                            // Also get page metadata
+                            const title = document.title || '';
+                            const metaDescription = document.querySelector('meta[name="description"]')?.content || '';
+                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+                                .map(h => h.textContent.trim())
+                                .filter(h => h.length > 0)
+                                .slice(0, 10); // Limit to first 10 headings
+                            
+                            return JSON.stringify({
+                                title: title,
+                                description: metaDescription,
+                                headings: headings,
+                                content: content
+                            });
+                        } catch (error) {
+                            return JSON.stringify({ error: error.message });
+                        }
+                    })();
+                `).then(result => {
+                    try {
+                        const data = JSON.parse(result);
+                        if (data.error) {
+                            reject(new Error(data.error));
+                        } else {
+                            // Format the content nicely
+                            let formattedContent = '';
+                            if (data.title) formattedContent += `Title: ${data.title}\\n\\n`;
+                            if (data.description) formattedContent += `Description: ${data.description}\\n\\n`;
+                            if (data.headings && data.headings.length > 0) {
+                                formattedContent += `Headings:\\n${data.headings.map(h => `- ${h}`).join('\\n')}\\n\\n`;
+                            }
+                            if (data.content) formattedContent += `Content:\\n${data.content}`;
+                            
+                            resolve(formattedContent);
+                        }
+                    } catch (error) {
+                        reject(error);
+                    }
+                }).catch(reject);
+            });
+        }
+
+        function summarizeCurrentPage() {
+            const btn = document.getElementById('summarizeBtn');
+            btn.disabled = true;
+            btn.textContent = 'Summarizing...';
+            
+            // Get current page info
+            const currentUrl = window.currentUrl || '';
+            const currentTitle = window.currentTitle || '';
+            
+            if (!currentUrl) {
+                addAIMessage('No page to summarize. Please navigate to a webpage first.', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Generate Summary';
+                return;
+            }
+            
+            // Call AI summarize API
+            callAISummarizeAPI(currentUrl, currentTitle);
+        }
+
+        async function callAISummarizeAPI(url, title) {
+            try {
+                // Get actual page content for summarization
+                let pageContent = '';
+                try {
+                    pageContent = await getCurrentPageContent();
+                } catch (error) {
+                    console.log('Could not get page content for summarization:', error);
+                }
+                
+                let response;
+                if (window.electronAPI) {
+                    // Use Electron API with actual page content
+                    const context = `Page: ${title} (${url})\n\nPage Content:\n${pageContent}`;
+                    response = await window.electronAPI.aiSummarize(url, context);
+                } else {
+                    // Use web API
+                    const apiResponse = await fetch('/api/ai/summarize', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            url: url,
+                            title: title,
+                            content: pageContent
+                        })
+                    });
+                    const data = await apiResponse.json();
+                    response = data.response;
+                }
+                
+                // Show summary in chat tab
+                switchAITab('chat');
+                addAIMessage(`**Page Summary:**\n\n${response}`, 'assistant');
+                
+            } catch (error) {
+                console.error('AI Summarize Error:', error);
+                addAIMessage('Sorry, there was an error summarizing the page.', 'error');
+            } finally {
+                const btn = document.getElementById('summarizeBtn');
+                btn.disabled = false;
+                btn.textContent = 'Generate Summary';
+            }
         }
 
         function toggleFullscreen() {
@@ -1288,25 +2390,71 @@
 
         // Button State Management
         function updateButtonStates(view) {
+            try {
+                console.log('=== UPDATE BUTTON STATES START ===');
+                console.log('View:', view);
+                console.log('Current history index:', currentHistoryIndex);
+                console.log('Session history length:', sessionHistory.length);
+                console.log('Session history:', sessionHistory);
+                
             const backBtn = document.getElementById('backBtn');
             const forwardBtn = document.getElementById('forwardBtn');
             const refreshBtn = document.getElementById('refreshBtn');
             const homeBtn = document.getElementById('homeBtn');
+                
+                console.log('Buttons found:', {
+                    backBtn: !!backBtn,
+                    forwardBtn: !!forwardBtn,
+                    refreshBtn: !!refreshBtn,
+                    homeBtn: !!homeBtn
+                });
             
             if (view === 'home') {
                 // On home page - check if there's future history
-                if (backBtn) backBtn.disabled = currentHistoryIndex <= 0;
-                if (forwardBtn) forwardBtn.disabled = currentHistoryIndex >= sessionHistory.length - 1;
+                    if (backBtn) {
+                        backBtn.disabled = currentHistoryIndex <= 0;
+                        console.log('Home view - Back button disabled:', backBtn.disabled);
+                    }
+                    if (forwardBtn) {
+                        forwardBtn.disabled = currentHistoryIndex >= sessionHistory.length - 1;
+                        console.log('Home view - Forward button disabled:', forwardBtn.disabled);
+                    }
                 if (refreshBtn) refreshBtn.disabled = true;
                 if (homeBtn) homeBtn.disabled = false;
             } else if (view === 'browser') {
                 // In browser view - enable based on history
-                if (backBtn) backBtn.disabled = currentHistoryIndex <= 0;
-                if (forwardBtn) forwardBtn.disabled = currentHistoryIndex >= sessionHistory.length - 1;
+                    if (backBtn) {
+                        backBtn.disabled = currentHistoryIndex <= 0;
+                        console.log('Browser view - Back button disabled:', backBtn.disabled);
+                    }
+                    if (forwardBtn) {
+                        forwardBtn.disabled = currentHistoryIndex >= sessionHistory.length - 1;
+                        console.log('Browser view - Forward button disabled:', forwardBtn.disabled);
+                    }
                 if (refreshBtn) refreshBtn.disabled = false;
                 if (homeBtn) homeBtn.disabled = false;
+                }
+                console.log('=== UPDATE BUTTON STATES END ===');
+            } catch (error) {
+                console.error('Error in updateButtonStates:', error);
             }
         }
+
+        // Debug function to test button states manually
+        function testButtonStates() {
+            console.log('=== MANUAL BUTTON STATE TEST ===');
+            console.log('Current history index:', currentHistoryIndex);
+            console.log('Session history:', sessionHistory);
+            console.log('Back button element:', document.getElementById('backBtn'));
+            console.log('Back button disabled:', document.getElementById('backBtn')?.disabled);
+            console.log('Forward button disabled:', document.getElementById('forwardBtn')?.disabled);
+            console.log('Refresh button disabled:', document.getElementById('refreshBtn')?.disabled);
+            console.log('Home button disabled:', document.getElementById('homeBtn')?.disabled);
+            console.log('=== END MANUAL TEST ===');
+        }
+
+        // Make test function available globally
+        window.testButtonStates = testButtonStates;
 
         // Modern Browser Toolbar Functions
         function toggleBookmark() {
@@ -1409,10 +2557,6 @@
         // Browser-Specific Features
         function openBluechipAI() {
             console.log('Opening Bluechip AI');
-            // This would open the AI sidebar or navigate to AI features
-            if (window.electronAPI) {
-                window.electronAPI.openBluechipAI();
-            }
             closeMenu();
         }
         
@@ -1682,9 +2826,13 @@
         console.log('window.goBack:', typeof window.goBack);
         console.log('window.goHome:', typeof window.goHome);
         console.log('window.electronAPI:', typeof window.electronAPI);
+        
+        // Listen for IPC events from Electron main process
+        if (typeof window !== 'undefined' && window.electronAPI) {
+            // Other IPC listeners can be added here
+        }
         console.log('===================================');
         
-        // Test function for debugging
 
         // Webview event listeners
         document.addEventListener('DOMContentLoaded', function() {
@@ -1718,9 +2866,102 @@
                 
                 webview.addEventListener('did-finish-load', () => {
                     console.log('WebView finished loading - viewport should be correct');
+                    // Update page title for AI sidebar
+                    try {
+                        const title = webview.getTitle();
+                        if (title) {
+                            window.currentTitle = title;
+                            console.log('Page title updated:', title);
+                        }
+                    } catch (error) {
+                        console.log('Could not get page title:', error);
+                        window.currentTitle = window.currentUrl || 'Unknown Page';
+                    }
                 });
             }
         });
     </script>
+
+
+    <!-- AI Mode Interface -->
+    <div id="aiModeInterface" class="ai-mode-interface">
+        
+        <div class="ai-mode-content">
+            <!-- Welcome Screen -->
+            <div id="aiModeWelcome" class="ai-mode-welcome">
+                <h1 class="ai-mode-welcome-title">Meet AI Mode</h1>
+                <p class="ai-mode-welcome-subtitle">Ask detailed questions for better responses</p>
+            </div>
+            
+            <!-- Chat Container -->
+            <div id="aiModeChatContainer" class="ai-mode-chat-container">
+                <div id="aiModeChatMessages" class="ai-mode-chat-messages">
+                    <!-- Messages will be added here -->
+                </div>
+            </div>
+            
+            <!-- Input Container -->
+            <div class="ai-mode-input-container">
+                <input type="text" class="ai-mode-input" id="aiModeInput" placeholder="Ask anything" onkeypress="handleAIModeKeyPress(event)">
+                <div class="ai-mode-input-icons">
+                    <svg class="ai-mode-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21,15 16,10 5,21"></polyline>
+                    </svg>
+                    <svg class="ai-mode-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49"></path>
+                    </svg>
+                    <svg class="ai-mode-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                    <button class="ai-mode-send-btn" onclick="sendAIModeMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Suggestions (only shown on welcome screen) -->
+            <div id="aiModeSuggestions" class="ai-mode-suggestions">
+                <div class="ai-mode-suggestion" onclick="askAIModeQuestion('Free local events happening this week')">
+                    <svg class="ai-mode-suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span class="ai-mode-suggestion-text">Free local events happening this week</span>
+                </div>
+                
+                <div class="ai-mode-suggestion" onclick="askAIModeQuestion('Make a table comparing memory foam vs hybrid mattresses')">
+                    <svg class="ai-mode-suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span class="ai-mode-suggestion-text">Make a table comparing memory foam vs hybrid mattresses</span>
+                </div>
+                
+                <div class="ai-mode-suggestion" onclick="askAIModeQuestion('How do I get started playing padel?')">
+                    <svg class="ai-mode-suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span class="ai-mode-suggestion-text">How do I get started playing padel?</span>
+                </div>
+                
+                <div class="ai-mode-suggestion" onclick="askAIModeQuestion('What is this page about?')">
+                    <svg class="ai-mode-suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span class="ai-mode-suggestion-text">What is this page about?</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

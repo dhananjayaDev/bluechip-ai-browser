@@ -59,6 +59,29 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    // Listen for AI sidebar toggle events
+    const handleToggleAISidebar = () => {
+      console.log('AI Sidebar toggle event received');
+      setAiSidebarOpen(prev => {
+        console.log('AI Sidebar state changing from', prev, 'to', !prev);
+        return !prev;
+      });
+    };
+
+    // Listen for custom events from the HTML page
+    window.addEventListener('toggleAISidebar', handleToggleAISidebar);
+    
+    // Listen for IPC events from Electron main process
+    if (typeof window !== 'undefined' && window.electronAPI) {
+      window.electronAPI.onToggleAISidebar?.(handleToggleAISidebar);
+    }
+
+    return () => {
+      window.removeEventListener('toggleAISidebar', handleToggleAISidebar);
+    };
+  }, []);
+
   const handleNavigation = async (url) => {
     if (!url) return;
     
@@ -248,7 +271,10 @@ export default function Home() {
         onBookmarkToggle={handleBookmarkToggle}
         isBookmarked={isBookmarked}
         isLoading={isLoading}
-        onAIToggle={() => setAiSidebarOpen(!aiSidebarOpen)}
+        onAIToggle={() => {
+          console.log('AI Toggle button clicked');
+          setAiSidebarOpen(!aiSidebarOpen);
+        }}
         aiSidebarOpen={aiSidebarOpen}
         onNewTab={handleNewTab}
         onNewWindow={handleNewWindow}

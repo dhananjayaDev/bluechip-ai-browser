@@ -89,14 +89,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
   aiChat: (message, context) => ipcRenderer.invoke('ai-chat', message, context),
   aiSummarize: (url, content) => ipcRenderer.invoke('ai-summarize', url, content),
   
-  // Utils
-  openExternal: (url) => ipcRenderer.invoke('open-external', url),
-  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+      // Utils
+      openExternal: (url) => ipcRenderer.invoke('open-external', url),
+      getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+      openAIChat: () => ipcRenderer.invoke('open-ai-chat'),
+      closeAIChat: () => ipcRenderer.invoke('close-ai-chat'),
+      toggleAISidebar: () => ipcRenderer.invoke('toggle-ai-sidebar'),
   
   // Listeners
   onBookmarkAdded: (callback) => ipcRenderer.on('bookmark-added', callback),
   onBookmarkRemoved: (callback) => ipcRenderer.on('bookmark-removed', callback),
   onHistoryUpdated: (callback) => ipcRenderer.on('history-updated', callback),
+  onToggleAISidebar: (callback) => ipcRenderer.on('toggle-ai-sidebar', callback),
   onTabCreated: (callback) => ipcRenderer.on('tab-created', callback),
   onTabClosed: (callback) => ipcRenderer.on('tab-closed', callback),
   onNavigationChanged: (callback) => ipcRenderer.on('navigation-changed', callback),
