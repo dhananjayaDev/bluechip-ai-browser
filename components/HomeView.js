@@ -16,6 +16,12 @@ export default function HomeView({ onOpenSite, onOpenAIMode }) {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit(e);
+    }
+  };
+
   const popularSites = [
     { 
       name: 'Google', 
@@ -64,13 +70,13 @@ export default function HomeView({ onOpenSite, onOpenAIMode }) {
             </svg>
           </div>
           <form onSubmit={handleSearchSubmit}>
-            <textarea 
+            <input 
               ref={searchInputRef}
+              type="text"
               className="search-input" 
               placeholder="Search the web or enter a URL"
-              id="searchInput" 
-              rows="1" 
-              style={{ resize: 'none' }}
+              id="searchInput"
+              onKeyPress={handleKeyPress}
             />
           </form>
           <button className="ai-mode-btn" onClick={onOpenAIMode} title="AI Mode">

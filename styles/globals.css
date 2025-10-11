@@ -121,6 +121,12 @@ body {
   outline: none;
   box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
   transition: box-shadow 0.2s;
+  resize: none;
+  overflow: hidden;
+  height: auto;
+  min-height: 50px;
+  max-height: 50px;
+  line-height: 1.2;
 }
 
 .search-input:focus {
