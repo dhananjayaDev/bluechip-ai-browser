@@ -1,7 +1,6 @@
 const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
-const { spawn } = require('child_process');
-const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 // Load environment variables
 require('dotenv').config({ path: path.join(__dirname, '../.env.local') });
@@ -12,40 +11,6 @@ const Database = require('./database');
 let mainWindow;
 let aiChatWindow;
 let database;
-let nextServer;
-
-function loadStaticFiles() {
-  console.log('Loading static files...');
-  
-  // Try to find static files in different locations
-  const possiblePaths = [
-    path.join(process.resourcesPath, 'out/index.html'),
-    path.join(process.resourcesPath, 'app.asar.unpacked/out/index.html'),
-    path.join(__dirname, '../out/index.html'),
-    path.join(__dirname, '../../out/index.html'),
-    path.join(__dirname, '../../../out/index.html')
-  ];
-  
-  let foundPath = null;
-  for (const testPath of possiblePaths) {
-    console.log('Testing path:', testPath);
-    if (require('fs').existsSync(testPath)) {
-      foundPath = testPath;
-      console.log('✅ Found index.html at:', foundPath);
-      break;
-    }
-  }
-  
-  if (foundPath) {
-    console.log('Loading static file:', foundPath);
-    mainWindow.loadFile(foundPath);
-  } else {
-    console.error('❌ Could not find any static files');
-    console.log('Available paths checked:', possiblePaths);
-    // Show error page with more details
-    mainWindow.loadURL('data:text/html,<h1>Error: Could not load application</h1><p>Static files not found. Check console for details.</p><p>Make sure to run: npm run build:next</p>');
-  }
-}
 
 function createWindow() {
   // Create the browser window
@@ -72,32 +37,9 @@ function createWindow() {
 
   // Load the actual browser UI
   if (isDev) {
-    console.log('Development mode: Loading Next.js dev server...');
-    
-    // Add error handling for URL loading
-    mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription, validatedURL) => {
-      console.error('Failed to load URL:', validatedURL);
-      console.error('Error code:', errorCode);
-      console.error('Error description:', errorDescription);
-    });
-    
-    mainWindow.webContents.on('did-finish-load', () => {
-      console.log('✅ Successfully loaded Next.js dev server');
-    });
-    
-    mainWindow.webContents.on('did-start-loading', () => {
-      console.log('🔄 Starting to load Next.js dev server...');
-    });
-    
-    // Try to load the URL
-    mainWindow.loadURL('http://localhost:3000').catch(err => {
-      console.error('❌ Failed to load http://localhost:3000:', err);
-      // Fallback to a simple error page
-      mainWindow.loadURL('data:text/html,<h1>Error Loading App</h1><p>Could not connect to Next.js dev server at http://localhost:3000</p><p>Make sure the dev server is running with: npm run dev:next</p>');
-    });
+    mainWindow.loadURL('http://localhost:3000');
   } else {
-    console.log('Production mode: Loading static files...');
-    loadStaticFiles();
+    mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
   }
 
   // Show the window when it's ready
@@ -308,10 +250,6 @@ app.whenReady().then(async () => {
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    // Kill Next.js server if running
-    if (nextServer) {
-      nextServer.kill();
-    }
     app.quit();
   }
 });

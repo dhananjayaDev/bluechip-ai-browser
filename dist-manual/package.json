@@ -2,16 +2,16 @@
   "name": "bluechip-ai-browser",
   "version": "1.0.0",
   "description": "AI-powered desktop browser by Bluechip Technologies Asia - We Build AI Future",
-  "main": "electron/main-browser.js",
+  "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
     "dev": "concurrently \"npm run dev:next\" \"npm run dev:electron\"",
     "dev:next": "next dev -p 3000",
-    "dev:electron": "wait-on http://localhost:3000 --timeout 30000 --verbose && echo 'Next.js server is ready, starting Electron...' && npx electron .",
+    "dev:electron": "wait-on http://localhost:3000 && npx electron .",
     "build:next": "next build",
     "build:win": "npm run build:next && cross-env NODE_ENV=production electron-builder --win",
     "build:win-dev": "npm run build:next && cross-env NODE_ENV=production electron-builder --win --config.win.sign=false",
-    "build:win-portable": "npm run build:next && electron-builder --win --config.win.target=portable",
+    "build:win-no-sign": "npm run build:next && cross-env NODE_ENV=production CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win --config.win.sign=false",
     "build:mac": "npm run build:next && cross-env NODE_ENV=production electron-builder --mac",
     "build:linux": "npm run build:next && cross-env NODE_ENV=production electron-builder --linux",
     "build:all": "npm run build:next && cross-env NODE_ENV=production electron-builder --win --mac --linux",
@@ -94,12 +94,8 @@
     ],
     "buildDependenciesFromSource": false,
     "nodeGypRebuild": false,
-    "asar": true,
-    "asarUnpack": [
-      "node_modules/better-sqlite3/**/*",
-      "database/**/*",
-      "out/**/*"
-    ],
+    "asar": false,
+    "asarUnpack": [],
     "extraResources": [
       {
         "from": "database/",
@@ -108,10 +104,6 @@
       {
         "from": "lib/",
         "to": "lib/"
-      },
-      {
-        "from": "out/",
-        "to": "out/"
       }
     ],
     "win": {
@@ -123,11 +115,19 @@
           ]
         }
       ],
-      "icon": "public/logo.ico",
       "requestedExecutionLevel": "asInvoker",
-      "artifactName": "${productName}-${version}-${arch}.${ext}",
-      "forceCodeSigning": false,
-      "publisherName": "Bluechip Technologies Asia"
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "BlueChip AI Browser",
+      "displayLanguageSelector": false,
+      "language": "1033"
     },
     "mac": {
       "target": [

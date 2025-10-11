@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const path = require('path');
 const nextConfig = {
-  // Remove output: 'export' to enable API routes
+  // Only enable static export for production builds
+  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
   trailingSlash: true,
   images: {
     unoptimized: true
@@ -36,11 +37,10 @@ const nextConfig = {
         process: false,
       };
       
-      // Disable problematic modules for Electron
+      // Define global properly
       config.resolve.alias = {
         ...config.resolve.alias,
-        'react-refresh': false,
-        'webpack': false,
+        global: 'globalThis',
       };
       
       // Multiple polyfill strategies
@@ -57,8 +57,6 @@ const nextConfig = {
         })
       );
       
-      // Entry point polyfill removed - causing issues
-      
     }
     
     // Optimize for development
@@ -66,12 +64,6 @@ const nextConfig = {
       config.watchOptions = {
         poll: 1000,
         aggregateTimeout: 300,
-      };
-      // Disable Fast Refresh for Electron
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        'react-refresh': false,
-        'webpack': false,
       };
     }
     

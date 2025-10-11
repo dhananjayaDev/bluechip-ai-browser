@@ -13,13 +13,8 @@ export default async function handler(req, res) {
     // Import AI service
     const aiService = require('../../../lib/ai');
     
-    // Initialize with API key from environment
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: 'AI service not configured' });
-    }
-
-    await aiService.initialize(apiKey);
+        // Initialize with DIALOGPT AI mode (no API key needed)
+        await aiService.initialize(null, 'dialogpt');
     const response = await aiService.chat(message, context);
 
     res.status(200).json({ response });

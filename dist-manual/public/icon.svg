@@ -1,0 +1,32 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#3B82F6" stroke="#1E40AF" stroke-width="2"/>
+  
+  <!-- Browser window -->
+  <rect x="16" y="20" width="32" height="24" rx="2" fill="white" stroke="#1E40AF" stroke-width="1"/>
+  
+  <!-- Browser tabs -->
+  <rect x="18" y="18" width="8" height="4" rx="1" fill="#F59E0B"/>
+  <rect x="28" y="18" width="8" height="4" rx="1" fill="#10B981"/>
+  <rect x="38" y="18" width="8" height="4" rx="1" fill="#EF4444"/>
+  
+  <!-- AI sparkles -->
+  <path d="M48 16L50 14L52 16L50 18L48 16Z" fill="#FCD34D"/>
+  <path d="M14 16L16 14L18 16L16 18L14 16Z" fill="#FCD34D"/>
+  <path d="M31 8L32 6L33 8L32 10L31 8Z" fill="#FCD34D"/>
+  
+  <!-- Navigation bar -->
+  <rect x="18" y="24" width="28" height="3" rx="1" fill="#E5E7EB"/>
+  
+  <!-- Content area -->
+  <rect x="18" y="29" width="28" height="13" rx="1" fill="#F9FAFB"/>
+  
+  <!-- AI brain symbol -->
+  <circle cx="32" cy="35" r="3" fill="#8B5CF6"/>
+  <path d="M32 32L34 36L30 36L32 32Z" fill="white"/>
+  
+  <!-- Connection lines -->
+  <path d="M32 38L32 42" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="2 2"/>
+  <path d="M28 40L24 40" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="2 2"/>
+  <path d="M36 40L40 40" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="2 2"/>
+</svg> 
